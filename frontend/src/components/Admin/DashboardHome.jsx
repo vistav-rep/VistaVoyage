@@ -94,7 +94,7 @@ const DashboardHome = () => {
               <div className="flex gap-5 text-xs font-medium text-white/50">
                 {['Packages','Flights','Consults'].map((l, i) => (
                   <span key={i} className="flex items-center gap-2">
-                    <span className={`w-2.5 h-2.5 rounded-full ${i===0?'bg-violet-400':i==='bg-cyan-400':'bg-white/30'}`} 
+                    <span className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-violet-400' : i === 1 ? 'bg-cyan-400' : 'bg-white/30'}`} 
                       style={{ background: i === 0 ? '#a78bfa' : i === 1 ? '#22d3ee' : 'rgba(255,255,255,0.3)' }} />
                     {l}
                   </span>
