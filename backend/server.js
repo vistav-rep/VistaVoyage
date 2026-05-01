@@ -76,6 +76,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const partnerRoutes = require("./routes/partnerRoutes");
 const seasonRoutes = require("./routes/seasonRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
@@ -84,6 +85,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/partners", partnerRoutes);
 app.use("/api/seasons", seasonRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 
 console.log('✅ All routes initialized');
