@@ -7,7 +7,6 @@ const Loader = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={{ duration: 0.8, delay: 1.8, ease: "easeInOut" }}
-      onAnimationComplete={() => document.body.style.overflow = "auto"}
       className="fixed inset-0 z-[999] bg-dark flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Background Elements */}

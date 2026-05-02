@@ -27,7 +27,8 @@
     <meta property="og:type" content="website" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Match splash/loader (#0A0A0A) so first paint is not white before React mounts -->
+    <div id="root" style="min-height: 100vh; background-color: #0A0A0A"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
