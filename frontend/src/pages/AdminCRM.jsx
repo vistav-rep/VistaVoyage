@@ -21,20 +21,24 @@ const AdminCRM = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${base}/bookings?limit=500&page=1`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      const data = await response.json();
-      setBookings(data);
-      
-      // Calculate stats
-      const total = data.length;
-      const confirmed = data.filter(b => b.status === 'CONFIRMED').length;
-      const pending = data.filter(b => b.status === 'PENDING').length;
-      const revenue = data.reduce((acc, b) => acc + (b.totalPrice || 0), 0);
-      
+      const payload = await response.json();
+      const rows = Array.isArray(payload) ? payload : (payload.data || []);
+      setBookings(rows);
+
+      const total =
+        payload.pagination?.scopeTotal ??
+        payload.pagination?.total ??
+        rows.length;
+      const confirmed = rows.filter((b) => b.status === 'CONFIRMED').length;
+      const pending = rows.filter((b) => b.status === 'PENDING').length;
+      const revenue = rows.reduce((acc, b) => acc + (b.totalPrice || 0), 0);
+
       setStats({ total, confirmed, pending, revenue });
       setLoading(false);
     } catch (error) {

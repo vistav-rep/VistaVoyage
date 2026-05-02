@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Edit2, Trash2, Plus, X, Mail, Lock, User, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const avatarColors = [
   'linear-gradient(195deg, #8b5cf6, #6366f1)',
@@ -41,9 +42,9 @@ const TablesView = () => {
 
   const fetchData = async () => {
     try {
-      const [sRes, bRes] = await Promise.all([api.get('/admin/staff'), api.get('/bookings')]);
+      const [sRes, bRes] = await Promise.all([api.get('/admin/staff'), api.get('/bookings?limit=200&page=1')]);
       setStaff(Array.isArray(sRes.data) ? sRes.data : []);
-      setBookings(Array.isArray(bRes.data) ? bRes.data : []);
+      setBookings(listItemsFromResponse(bRes));
     } catch {}
     finally { setLoading(false); }
   };

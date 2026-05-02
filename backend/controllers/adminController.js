@@ -7,46 +7,53 @@ const Activity = require('../models/Activity');
 // @desc    Get dashboard stats
 exports.getStats = async (req, res) => {
   try {
-    const totalBookings = await Booking.countDocuments();
-    const pendingBookings = await Booking.countDocuments({ 
-      workflowStatus: { $in: ['NEW', 'PENDING_CONFIRMATION', 'ASSIGNED'] } 
-    });
-    const paymentsToConfirm = await Booking.countDocuments({ 
-      paymentStatus: 'PENDING' 
-    });
-    const toursStartingToday = await Booking.countDocuments({
-      type: 'PACKAGE',
-      fromDate: { $gte: today, $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) }
-    });
-    const airportPickups = 6; // Mock or calculate from custom field if exists
-    
-    const flightBookings = await Booking.countDocuments({ type: 'FLIGHT' });
-    const packageBookings = await Booking.countDocuments({ 
-      $or: [
-        { type: 'PACKAGE' },
-        { type: { $exists: false } },
-        { type: null }
-      ]
-    });
-    const appointmentBookings = await Booking.countDocuments({ type: 'APPOINTMENT' });
-    
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const bookingsToday = await Booking.countDocuments({ createdAt: { $gte: today } });
-    
-    const totalTours = await Tour.countDocuments();
-    const activeTours = totalTours; 
+    const dayEnd = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
-    const totalRevenueResult = await Booking.aggregate([
-      { $match: { status: 'CONFIRMED' } }, // Only count revenue from confirmed bookings
-      { $group: { _id: null, total: { $sum: '$totalPrice' } } }
+    const [
+      totalBookings,
+      pendingBookings,
+      paymentsToConfirm,
+      toursStartingToday,
+      flightBookings,
+      packageBookings,
+      appointmentBookings,
+      bookingsToday,
+      totalTours,
+      totalRevenueResult,
+      staffOnline,
+    ] = await Promise.all([
+      Booking.countDocuments(),
+      Booking.countDocuments({
+        workflowStatus: { $in: ['NEW', 'PENDING_CONFIRMATION', 'ASSIGNED'] },
+      }),
+      Booking.countDocuments({ paymentStatus: 'PENDING' }),
+      Booking.countDocuments({
+        type: 'PACKAGE',
+        fromDate: { $gte: today, $lt: dayEnd },
+      }),
+      Booking.countDocuments({ type: 'FLIGHT' }),
+      Booking.countDocuments({
+        $or: [{ type: 'PACKAGE' }, { type: { $exists: false } }, { type: null }],
+      }),
+      Booking.countDocuments({ type: 'APPOINTMENT' }),
+      Booking.countDocuments({ createdAt: { $gte: today } }),
+      Tour.countDocuments(),
+      Booking.aggregate([
+        { $match: { status: 'CONFIRMED' } },
+        { $group: { _id: null, total: { $sum: '$totalPrice' } } },
+      ]),
+      User.countDocuments({
+        role: { $in: ['ADMIN', 'MANAGER', 'AGENT'] },
+        status: { $in: ['online', 'working', 'away'] },
+      }),
     ]);
-    const totalRevenue = totalRevenueResult[0]?.total || 0;
 
-    const staffOnline = await User.countDocuments({ 
-      role: { $in: ['ADMIN', 'MANAGER', 'AGENT'] },
-      status: { $in: ['online', 'working', 'away'] } 
-    });
+    const airportPickups = 6; // Mock or calculate from custom field if exists
+    const activeTours = totalTours;
+
+    const totalRevenue = totalRevenueResult[0]?.total || 0;
 
     console.log('📊 Dashboard Stats Calculated:', {
       totalBookings,

@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const ToursManagement = () => {
   const [tours, setTours] = useState([]);
@@ -43,8 +44,8 @@ const ToursManagement = () => {
 
   const fetchTours = async () => {
     try {
-      const response = await api.get('/tours');
-      setTours(Array.isArray(response.data) ? response.data : []);
+      const response = await api.get('/tours?limit=500&page=1');
+      setTours(listItemsFromResponse(response));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching tours:', error);

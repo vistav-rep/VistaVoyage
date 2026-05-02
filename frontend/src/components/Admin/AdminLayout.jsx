@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import { Bell, Search, Settings, User, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const pageNames = {
   dashboard: 'Dashboard', tables: 'Tables', billing: 'Billing',
@@ -19,8 +20,9 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
   const [mobileOpen, setMobileOpen]       = useState(false);
 
   useEffect(() => {
-    api.get('/bookings').then(r => {
-      if (Array.isArray(r.data)) setNotifications(r.data.slice(0, 4));
+    api.get('/bookings?limit=20&page=1').then((r) => {
+      const items = listItemsFromResponse(r);
+      setNotifications(items.slice(0, 4));
     }).catch(() => {});
   }, []);
 

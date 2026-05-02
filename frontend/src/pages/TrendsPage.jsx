@@ -11,9 +11,11 @@ const TrendsPage = () => {
   useEffect(() => {
     const fetchTrends = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/tours');
+        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${base}/tours?limit=100&page=1`);
         const data = await response.json();
-        setTrends(data || []);
+        const list = Array.isArray(data) ? data : (data.data || []);
+        setTrends(list);
       } catch (error) {
         console.error('Error fetching trends:', error);
       } finally {
