@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, ArrowRight, ShieldCheck, Globe, User } from 'lucide-react';
 import api from '../api/axios';
+import Logo from '../components/Logo';
 
 const StaffLogin = () => {
   const navigate = useNavigate();
@@ -49,11 +50,9 @@ const StaffLogin = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl opacity-50" />
           
           <div className="relative z-10">
-            <Link to="/" className="flex items-center space-x-2 mb-16">
-              <span className="text-2xl font-serif font-bold tracking-tighter">
-                VISTA<span className="italic font-normal text-accent">VOYAGE</span>
-              </span>
-            </Link>
+                <Link to="/" className="flex items-center space-x-2 mb-16 h-10 overflow-hidden">
+                  <Logo height={48} inverted />
+                </Link>
             
             <h2 className="text-4xl font-serif mb-6 leading-tight">Executive <br/>Terminal Access</h2>
             <p className="text-white/60 text-sm leading-relaxed mb-10 max-w-xs">

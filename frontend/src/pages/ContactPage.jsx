@@ -1,16 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import api from '../api/axios';
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setFormData(prev => ({
+        ...prev,
+        name: parsedUser.name || '',
+        email: parsedUser.email || ''
+      }));
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    try {
+      await api.post('/messages', formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -170,7 +203,10 @@ const ContactPage = () => {
                         </label>
                         <input
                           type="text"
+                          name="name"
                           required
+                          value={formData.name}
+                          onChange={handleChange}
                           placeholder="Your Name"
                           className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                         />
@@ -182,7 +218,10 @@ const ContactPage = () => {
                         </label>
                         <input
                           type="email"
+                          name="email"
                           required
+                          value={formData.email}
+                          onChange={handleChange}
                           placeholder="Email Address"
                           className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                         />
@@ -195,6 +234,9 @@ const ContactPage = () => {
                       </label>
                       <input
                         type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
                         placeholder="Inquiry Topic"
                         className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                       />
@@ -206,14 +248,21 @@ const ContactPage = () => {
                       </label>
                       <textarea
                         rows="4"
+                        name="message"
                         required
+                        value={formData.message}
+                        onChange={handleChange}
                         placeholder="How can we help you?"
                         className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400 resize-none"
                       ></textarea>
                     </div>
 
-                    <button className="btn-primary !px-16 flex items-center gap-4 shadow-lg hover:shadow-xl transition-all">
-                      Send Message
+                    <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="btn-primary !px-16 flex items-center gap-4 shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                    >
+                      {loading ? 'Sending...' : 'Send Message'}
                       <Send size={14} />
                     </button>
                   </form>

@@ -9,7 +9,8 @@ const TourCard = ({ tour, dark = true }) => {
   const getImageUrl = (image) => {
     if (!image) return 'https://images.unsplash.com/photo-1534067783941-51c9c23eccfd';
     if (image.startsWith('/uploads')) {
-      return `http://localhost:5000${image}`;
+      const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'http://localhost:5000';
+      return `${baseUrl}${image}`;
     }
     return image;
   };
@@ -27,6 +28,8 @@ const TourCard = ({ tour, dark = true }) => {
         <motion.img 
           src={getImageUrl(tour.image)} 
           alt={tour.title} 
+          loading="lazy"
+          decoding="async"
           whileHover={{ scale: 1.15 }}
           transition={{ duration: 2, ease: "easeOut" }}
           className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-1000"

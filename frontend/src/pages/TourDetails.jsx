@@ -48,6 +48,18 @@ const TourDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setBookingData(prev => ({
+        ...prev,
+        name: parsedUser.name || '',
+        email: parsedUser.email || ''
+      }));
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchTour = async () => {
       const staticTour = staticTours.find(t => t.id === id);
       if (staticTour) {
@@ -92,7 +104,8 @@ const TourDetails = () => {
   const getImageUrl = (image) => {
     if (!image) return 'https://images.unsplash.com/photo-1534067783941-51c9c23eccfd';
     if (typeof image === 'string' && image.startsWith('/uploads')) {
-      return `http://localhost:5000${image}`;
+      const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'http://localhost:5000';
+      return `${baseUrl}${image}`;
     }
     return image;
   };
@@ -115,36 +128,33 @@ const TourDetails = () => {
     );
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
+    
+    const finalBookingData = {
+      type: 'PACKAGE',
+      tourId: tour._id || tour.id,
+      guestName: bookingData.name,
+      guestEmail: bookingData.email,
+      guestPhone: bookingData.phone,
+      fromDate: bookingData.fromDate,
+      toDate: bookingData.toDate,
+      guestsCount: parseInt(bookingData.adults) + parseInt(bookingData.children) + parseInt(bookingData.infants),
+      totalPrice: totalPrice, 
+      metadata: {
+        adults: bookingData.adults,
+        children: bookingData.children,
+        infants: bookingData.infants,
+        message: bookingData.message
+      }
+    };
 
-    try {
-      await api.post('/bookings', {
-        type: 'PACKAGE',
-        tourId: tour._id || tour.id,
-        guestName: bookingData.name,
-        guestEmail: bookingData.email,
-        guestPhone: bookingData.phone,
-        fromDate: bookingData.fromDate,
-        toDate: bookingData.toDate,
-        guestsCount: parseInt(bookingData.adults) + parseInt(bookingData.children) + parseInt(bookingData.infants),
-        totalPrice: totalPrice, 
-        metadata: {
-          adults: bookingData.adults,
-          children: bookingData.children,
-          infants: bookingData.infants,
-          message: bookingData.message
-        }
-      });
-
-      setLoading(false);
-      setSubmitted(true);
-    } catch (err) {
-      setError(err.response?.data?.message || err.message);
-      setLoading(false);
-    }
+    navigate('/checkout', { 
+      state: { 
+        bookingData: finalBookingData,
+        tourData: tour
+      } 
+    });
   };
 
   const tabs = [

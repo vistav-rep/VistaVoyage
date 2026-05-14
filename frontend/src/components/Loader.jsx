@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Logo from './Logo';
 
 const Loader = () => {
   return (
@@ -18,15 +19,15 @@ const Loader = () => {
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-4xl md:text-5xl font-serif font-bold tracking-tighter mb-8"
-        >
-          VISTA<span className="italic font-normal text-accent">VOYAGE</span>
-        </motion.div>
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-8 flex items-center justify-center"
+          >
+            <Logo height={56} inverted />
+          </motion.div>
 
         {/* Animated Line */}
         <div className="relative w-48 md:w-64 overflow-hidden">

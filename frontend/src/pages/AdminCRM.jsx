@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
+import api from '../api/axios';
 import { motion } from 'framer-motion';
 
 const AdminCRM = () => {
@@ -20,13 +21,8 @@ const AdminCRM = () => {
 
   const fetchBookings = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/bookings', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
+      const response = await api.get('/bookings');
+      const data = response.data;
       setBookings(data);
       
       // Calculate stats
@@ -45,16 +41,8 @@ const AdminCRM = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/bookings/${id}/status`, {
-        method: 'PATCH',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ status })
-      });
-      if (response.ok) {
+      const response = await api.patch(`/bookings/${id}/status`, { status });
+      if (response.status === 200) {
         fetchBookings();
       }
     } catch (error) {

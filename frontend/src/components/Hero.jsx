@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+import Logo from './Logo';
 import skuVideo from '../assets/sku.mp4';
 import img1 from '../assets/y7.jpg';
 import img2 from '../assets/p9.jpg';
@@ -95,14 +96,14 @@ const Hero = () => {
             exit={{ opacity: 0 }}
           >
             <div>
-              <p className="text-accent tracking-[0.6em] text-xs mb-6">
-                VISTAVOYAGE
-              </p>
+              <div className="flex justify-center mb-6">
+                <Logo height={64} inverted />
+              </div>
               <h1 className="text-6xl md:text-9xl font-serif">
-                Beyond
-                <span className="italic text-accent"> Ordinary</span>
-              </h1>
-            </div>
+                 Beyond
+                 <span className="italic text-accent"> Ordinary</span>
+               </h1>
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -116,9 +117,9 @@ const Hero = () => {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="max-w-5xl"
           >
-            <h1 className="text-5xl md:text-[7rem] font-serif font-bold tracking-tighter uppercase mb-4 leading-tight">
-              VISTA<span className="italic font-normal text-accent">VOYAGE</span>
-            </h1>
+               <div className="flex justify-center mb-8 overflow-hidden h-20 md:h-28 items-center">
+                 <Logo height={120} inverted />
+               </div>
             
             <p className="text-accent tracking-[0.6em] text-xs md:text-sm mb-12 uppercase font-bold">
               Hallmark of Luxury Travel
@@ -127,7 +128,7 @@ const Hero = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-12">
               {index === 0 && (
                 <motion.button
-                  whileHover={{ scale: 1.05, backgroundColor: '#C5A358', color: '#fff' }}
+                  whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
                   onClick={() => navigate('/corporate')}
                   className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
                 >
@@ -135,21 +136,21 @@ const Hero = () => {
                 </motion.button>
               )}
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#C5A358', color: '#fff' }}
+                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
                 onClick={() => navigate('/tours')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >
                 Our Experiences
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#C5A358', color: '#fff' }}
+                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
                 onClick={() => navigate('/appointments')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >
                 Plan Your Journey
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#C5A358', color: '#fff' }}
+                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
                 onClick={() => navigate('/blogs')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >

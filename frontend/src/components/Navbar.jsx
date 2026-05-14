@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Globe, Phone } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Phone, User, LogOut } from 'lucide-react';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -16,11 +18,19 @@ const Navbar = () => {
     restDelta: 0.001
   });
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setIsOpen(false);
-    setActiveDropdown(null);
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
   }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/');
+  };
 
   const navLinks = [
     { 
@@ -78,13 +88,10 @@ const Navbar = () => {
       />
 
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center group">
-          <div className="w-12 h-px bg-accent scale-x-100 origin-left transition-all duration-700"></div>
-          <span className="text-2xl md:text-3xl font-serif font-bold tracking-tight text-dark hover:text-accent transition-all duration-700 ml-4">
-            VISTA<span className="italic font-normal text-stroke-accent group-hover:text-accent transition-colors duration-500">VOYAGE</span>
-          </span>
-        </Link>
+            {/* Logo */}
+            <Link to="/" className="flex items-center group py-1">
+              <Logo height={36} />
+            </Link>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center space-x-1">
@@ -142,13 +149,45 @@ const Navbar = () => {
           
           {/* CTA Button */}
           <div className="flex items-center gap-4 ml-8">
+            {user ? (
+              <div className="relative group/user">
+                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 hover:bg-white transition-all">
+                  <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">
+                    {user.name?.charAt(0) || 'U'}
+                  </div>
+                  <span className="text-[10px] uppercase tracking-widest font-black text-primary">{user.name}</span>
+                </button>
+                <div className="absolute top-full right-0 pt-2 opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all duration-300">
+                  <div className="bg-white rounded-2xl shadow-2xl border border-slate-50 overflow-hidden min-w-[180px]">
+                    {user.role === 'ADMIN' && (
+                      <Link to="/admin" className="flex items-center gap-3 px-6 py-4 text-xs font-bold text-primary hover:bg-slate-50 border-b border-slate-50">
+                        <Globe size={14} /> Admin Panel
+                      </Link>
+                    )}
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-6 py-4 text-xs font-bold text-rose-500 hover:bg-rose-50 transition-colors"
+                    >
+                      <LogOut size={14} /> Sign Out
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="flex items-center gap-2 px-4 py-2 text-[10px] uppercase tracking-[0.25em] font-bold text-dark/50 hover:text-dark transition-colors"
+              >
+                <User size={14} /> Login
+              </Link>
+            )}
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Link
                 to="/appointments"
-                className="px-8 py-3.5 text-[10px] uppercase tracking-[0.25em] font-bold transition-all duration-500 rounded-full bg-dark text-white hover:bg-accent hover:shadow-glow"
+                className="px-8 py-3.5 text-[10px] uppercase tracking-[0.25em] font-bold transition-all duration-500 rounded-full bg-primary text-white hover:bg-secondary hover:shadow-glow"
               >
                 Book Now
               </Link>
@@ -187,7 +226,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden fixed inset-0 bg-dark z-[99]"
+            className="lg:hidden fixed inset-0 bg-primary z-[99]"
           >
             {/* Animated Background */}
             <div className="absolute inset-0 overflow-hidden">
@@ -204,17 +243,15 @@ const Navbar = () => {
             </button>
 
             <div className="flex flex-col items-center justify-center h-full px-6 text-center relative z-10">
-              {/* Logo in Menu */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-16"
-              >
-                <span className="text-4xl font-serif font-bold tracking-tight text-white">
-                  VISTA<span className="italic font-normal text-accent">VOYAGE</span>
-                </span>
-              </motion.div>
+          {/* Logo in Menu */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-16 flex items-center justify-center"
+        >
+          <Logo height={48} inverted />
+        </motion.div>
 
               <div className="flex flex-col items-center space-y-8">
                 {navLinks.map((link, idx) => (
@@ -243,6 +280,22 @@ const Navbar = () => {
                 transition={{ delay: 0.1 * navLinks.length + 0.3 }}
                 className="mt-16 flex flex-col gap-4"
               >
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    className="bg-rose-500/10 text-rose-500 px-12 py-5 rounded-full text-[11px] uppercase tracking-[0.3em] font-bold border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all duration-500"
+                  >
+                    Sign Out
+                  </button>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="bg-white/10 text-white px-12 py-5 rounded-full text-[11px] uppercase tracking-[0.3em] font-bold border border-white/20 hover:bg-white hover:text-dark transition-all duration-500"
+                  >
+                    Login / Register
+                  </Link>
+                )}
                 <Link
                   to="/appointments"
                   onClick={() => setIsOpen(false)}

@@ -7,18 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#FFFFFF",
-        dark: "#0A0A0A",
+        primary: "#0b3d2e",
+        dark: "#000000",
         "dark-2": "#111111",
         "dark-3": "#1A1A1A",
-        secondary: "#6B7280",
-        accent: "#C5A358",
-        "accent-dark": "#A68741",
+        secondary: "#c8a248",
+        accent: "#c8a248",
+        "accent-dark": "#a8894f",
         surface: "#F5F5F5",
         light: "#FFFFFF",
-        jungle: "#004B49",
-        "accent-light": "#D4B67A",
-        "accent-glow": "rgba(197, 163, 88, 0.3)",
+        jungle: "#0b3d2e",
+        "accent-light": "#d4bc8a",
+        "accent-glow": "rgba(200, 162, 72, 0.3)",
       },
       fontFamily: {
         sans: ['Satoshi', 'ui-sans-serif', 'system-ui', 'sans-serif'],

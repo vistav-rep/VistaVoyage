@@ -31,9 +31,9 @@ const DestinationsGrid = () => {
             </span>
             <h2 className="text-[28px] md:text-[42px] font-serif text-dark mb-6 leading-tight tracking-tight">
               Tailor Made <br />
-              <span className="text-brown">Journeys</span>
+              <span className="text-accent">Journeys</span>
             </h2>
-            <p className="text-[#7B3F00] text-base tracking-wide font-light leading-relaxed">
+            <p className="text-primary text-base tracking-wide font-light leading-relaxed">
               Discovering exclusivity and grace across the globe.
             </p>
           </Reveal>
@@ -132,7 +132,7 @@ const DestinationsGrid = () => {
         {/* CTA */}
         <Reveal delay={0.5}>
           <div className="mt-24 text-center">
-            <button className="border border-dark/20 px-10 py-4 uppercase tracking-widest text-sm hover:bg-black hover:text-white transition">
+            <button className="border border-dark/20 px-10 py-4 uppercase tracking-widest text-sm hover:bg-primary hover:text-white transition">
               Explore Our Full Portfolio →
             </button>
           </div>

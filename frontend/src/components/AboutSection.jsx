@@ -58,10 +58,10 @@ const AboutSection = () => {
               The VistaVoyage Legacy
             </p>
 
-            <h1 className="text-5xl md:text-6xl font-serif text-black leading-tight">
+            <h2 className="text-5xl md:text-6xl font-serif text-black leading-tight">
               Redefining the <br />
               <span className="italic text-accent">Art of Travel</span>
-            </h1>
+            </h2>
           </Reveal>
 
           <Reveal delay={0.2}>
@@ -105,7 +105,7 @@ const AboutSection = () => {
           <Reveal delay={0.6}>
             <Link 
               to="/about"
-              className="inline-flex items-center gap-3 mt-4 bg-[#0f1e3f] text-white px-6 py-3 rounded-full font-medium hover:bg-[#1a2f5f] transition"
+              className="inline-flex items-center gap-3 mt-4 bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-secondary transition"
             >
               Discover More
               <ArrowRight className="w-4 h-4" />

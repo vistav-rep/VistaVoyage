@@ -1,117 +1,103 @@
-import React from 'react';
-import Reveal from './Reveal';
-import { motion } from 'framer-motion';
+import React from "react";
 
 const CSRSection = () => {
   const initiatives = [
     {
+      heading: "Social Inclusion",
       title: "Jamii Stawi",
-      subtitle: "Social Inclusion",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5"/>
-        </svg>
-      ),
-      objective: "Empowering lives through health equity, educational support, and economic dignity for neighboring communities."
+      text: "Empowering lives through health equity, educational support, and economic dignity for neighboring communities.",
     },
     {
+      heading: "Climate Resilience",
       title: "Uhifadhi Action",
-      subtitle: "Climate Resilience",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a8 8 0 0 1-8 8Z"/>
-        </svg>
-      ),
-      objective: "Active reforestation, waste circularity, and plastic neutrality to preserve Africa's untamed landscapes."
+      text: "Active reforestation, waste circularity, and plastic neutrality to preserve Africa’s untamed landscapes.",
     },
     {
+      heading: "Mentorship",
       title: "Mvuto Network",
-      subtitle: "Mentorship",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M15 14c.2-1 .7-1.7 1.5-2.5"/>
-        </svg>
-      ),
-      objective: "Fostering the next generation of African conservationists and ethical hospitality leaders through mentorship."
-    }
+      text: "Fostering the next generation of African conservationists and ethical hospitality leaders through mentorship.",
+    },
   ];
 
   return (
-    <section className="py-28 px-6 md:px-20 bg-[#0a0a0a] text-white relative overflow-hidden">
+    <section className="relative bg-white overflow-hidden pt-24 pb-52 px-6 md:px-20">
 
-      {/* SOFT GOLD GLOW BACKGROUND */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(197,163,88,0.06)_0%,transparent_70%)] pointer-events-none"></div>
-
+      {/* CONTENT */}
       <div className="max-w-6xl mx-auto relative z-10">
 
-        {/* HEADER */}
-        <div className="mb-24 max-w-3xl">
-          <Reveal>
-            <p className="text-[14px] tracking-[0.4em] uppercase text-[#FFD700] mb-6">
-              Our CSR
-            </p>
-          </Reveal>
+        {/* TITLE */}
+        <h2 className="text-5xl md:text-6xl font-bold leading-none mb-5">
+          <span style={{ color: "#0b3d2e" }}>Kovu </span>
+          <span style={{ color: "#c8a248" }}>Afrika</span>
+        </h2>
 
-          <Reveal delay={0.1}>
-            <h2 className="text-4xl md:text-6xl font-serif leading-tight mb-6"
-                style={{
-                  color: "#FFD700",
-                  textShadow: "0 0 8px #FFD700, 0 0 12px #FFD700, 0 0 16px #FFD700"
-                }}>
-              Kovu Afrika
-            </h2>
-          </Reveal>
+        {/* DESCRIPTION */}
+        <p className="text-[#444] leading-relaxed max-w-3xl mb-20 text-lg">
+          <span className="font-semibold">
+            “Healing Landscapes, Empowering Lives”.
+          </span>{" "}
+          Kovu Afrika represents our commitment to leaving a positive,
+          healing mark on the African continent. It is the bedrock of our
+          Eco-Luxury philosophy.
+        </p>
 
-          <Reveal delay={0.2}>
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed">
-              "Healing Landscapes, Empowering Lives". Kovu Afrika represents our commitment 
-              to leaving a lasting, positive mark on the African continent—where travel meets purpose.
-            </p>
-          </Reveal>
-        </div>
+        {/* CARDS */}
+        <div className="grid md:grid-cols-3 gap-8">
 
-        {/* INITIATIVES */}
-        <div className="grid md:grid-cols-3 gap-10">
           {initiatives.map((item, index) => (
-            <Reveal key={index} delay={index * 0.15}>
-              <motion.div
-                whileHover={{ y: -8 }}
-                className="group border border-white/10 rounded-2xl p-8 bg-white/[0.03] hover:bg-white/[0.06] transition duration-500 backdrop-blur-sm"
+            <div
+              key={index}
+              className="bg-white border border-[#e8e8e8] rounded-3xl p-8 shadow-sm hover:shadow-xl transition duration-500"
+            >
+
+              {/* HEADING */}
+              <h3 className="text-2xl font-bold text-black mb-3">
+                {item.heading}
+              </h3>
+
+              {/* TITLE */}
+              <p
+                className="text-xl font-semibold mb-4"
+                style={{ color: "#c8a248" }}
               >
-                {/* ICON */}
-                <div className="text-[#FFD700] mb-6 group-hover:scale-110 transition duration-500 drop-shadow-[0_0_8px_rgba(255,215,0,0.6)]">
-                  {item.icon}
-                </div>
+                {item.title}
+              </p>
 
-                {/* SUBTITLE */}
-                <p className="text-[10px] uppercase tracking-[0.3em] text-white/70 mb-3">
-                  {item.subtitle}
-                </p>
+              {/* TEXT */}
+              <p className="text-[#555] leading-relaxed text-[15px]">
+                {item.text}
+              </p>
 
-                {/* TITLE */}
-                <h3 className="text-2xl font-serif mb-4"
-                    style={{
-                      color: "#FFD700",
-                      textShadow: "0 0 6px #FFD700, 0 0 10px #FFD700"
-                    }}>
-                  {item.title}
-                </h3>
-
-                {/* TEXT */}
-                <p className="text-white/70 leading-relaxed text-sm">
-                  {item.objective}
-                </p>
-
-                {/* CTA */}
-                <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-widest text-[#FFD700]">
-                  Discover
-                  <div className="w-6 h-[1px] bg-[#FFD700] group-hover:w-10 transition-all duration-300"></div>
-                </div>
-
-              </motion.div>
-            </Reveal>
+            </div>
           ))}
+
+        </div>
+      </div>
+
+      {/* BOTTOM DESIGN */}
+      <div className="absolute bottom-0 left-0 w-full h-40 flex">
+
+        {/* GOLD SECTION */}
+        <div
+          className="w-1/2 h-full"
+          style={{ backgroundColor: "#c8a248" }}
+        />
+
+        {/* PATTERN SECTION */}
+        <div className="w-1/2 h-full bg-[#c8a248] flex items-center justify-center">
+
+          <div className="grid grid-cols-10 gap-3">
+
+            {Array.from({ length: 80 }).map((_, index) => (
+              <div
+                key={index}
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: "#0b3d2e" }}
+              />
+            ))}
+
+          </div>
+
         </div>
       </div>
     </section>

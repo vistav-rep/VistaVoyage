@@ -1,12 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import TourCard from '../components/TourCard';
 import Reveal from '../components/Reveal';
-import { tours } from '../data/toursData';
+import { tours as staticTours } from '../data/toursData';
 import { motion } from 'framer-motion';
+import api from '../api/axios';
 
 const ToursPage = () => {
+  const [tours, setTours] = useState(staticTours);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await api.get('/tours');
+        const dbTours = response.data;
+        
+        // Combine static and dynamic tours, avoiding duplicates by title if necessary
+        // or just append them
+        const combined = [...dbTours, ...staticTours];
+        
+        // Remove duplicates based on ID or title
+        const unique = combined.filter((tour, index, self) =>
+          index === self.findIndex((t) => (
+            (t._id || t.id) === (tour._id || tour.id)
+          ))
+        );
+
+        setTours(unique);
+      } catch (error) {
+        console.error('Error fetching tours:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTours();
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="bg-white">
       <Navbar />
@@ -32,9 +65,6 @@ const ToursPage = () => {
             <span className="text-accent text-[11px] md:text-[13px] uppercase tracking-[0.8em] font-bold mb-10 block">
               The VistaVoyage Legacy
             </span>
-            {/* <h1 className="text-7xl md:text-[10rem] font-serif text-primary mb-12 leading-none tracking-tighter">
-              Bespoke <span className="italic text-accent">Collections</span>
-            </h1> */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-primary/40 text-[10px] uppercase tracking-[0.4em] font-bold">
               <span>Private Safaris</span>
               <div className="w-1.5 h-1.5 bg-accent/30 rounded-full hidden md:block"></div>
@@ -67,19 +97,25 @@ const ToursPage = () => {
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-32">
-            {tours.map((pkg, index) => (
-              <Reveal key={pkg.id} delay={index * 0.1}>
-                <div className="group relative">
-                  {/* Subtle index number for each card */}
-                  <span className="absolute -top-10 left-0 text-[80px] font-serif italic text-primary/5 pointer-events-none group-hover:text-accent/10 transition-colors duration-700">
-                    {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                  </span>
-                  <TourCard tour={pkg} dark={false} />
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-32">
+              {tours.map((pkg, index) => (
+                <Reveal key={pkg._id || pkg.id} delay={index * 0.1}>
+                  <div className="group relative">
+                    {/* Subtle index number for each card */}
+                    <span className="absolute -top-10 left-0 text-[80px] font-serif italic text-primary/5 pointer-events-none group-hover:text-accent/10 transition-colors duration-700">
+                      {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                    </span>
+                    <TourCard tour={pkg} dark={false} />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

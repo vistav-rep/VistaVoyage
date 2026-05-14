@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from '../Logo';
 import {
   LayoutDashboard, Table2, CreditCard, Plane, MessageSquare,
   ShoppingBag, Users, MapPin, Star, BarChart3, Settings,
@@ -52,16 +53,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       <div className="flex-1 flex flex-col rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl"
         style={{ background: 'linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%)' }}>
         
-        {/* Logo */}
-        <div className="px-6 py-6 border-b border-white/5 flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
-            <MapPin size={20} className="text-white" />
+          {/* Logo */}
+          <div className="px-5 py-5 border-b border-white/10 flex items-center justify-center">
+          <Logo height={32} inverted />
           </div>
-          <div>
-            <p className="text-white font-bold text-lg leading-tight">VistaVoyage</p>
-            <p className="text-white/40 text-[10px] uppercase tracking-widest">Admin Panel</p>
-          </div>
-        </div>
 
         {/* Nav */}
         <nav className="flex-1 px-4 py-4 overflow-y-auto space-y-6">

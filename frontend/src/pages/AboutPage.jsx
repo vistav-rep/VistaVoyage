@@ -1,148 +1,269 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Reveal from '../components/Reveal';
-import { motion } from 'framer-motion';
-import { Check, Target, Eye, Shield, Compass, Heart, Users, ArrowRight } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Reveal from "../components/Reveal";
+import { motion } from "framer-motion";
+
+import {
+  ArrowRight,
+  Check,
+  Compass,
+  Shield,
+  Sparkles,
+  Globe2,
+  HeartHandshake,
+  Crown,
+} from "lucide-react";
 
 const AboutPage = () => {
-  const coreValues = [
-    { 
-      title: "Connoisseurship", 
-      desc: "We don't just offer destinations; we offer deep, expert-vetted knowledge.",
-      icon: <Compass className="text-accent" size={24} />
+  const values = [
+    {
+      title: "Curated Excellence",
+      desc: "Every journey is intentionally designed with detail, elegance, and emotional depth.",
+      icon: <Sparkles size={20} />,
     },
-    { 
-      title: "Stewardship", 
-      desc: "We are guardians of the environments and communities we visit.",
-      icon: <Shield className="text-accent" size={24} />
+    {
+      title: "Luxury With Purpose",
+      desc: "We blend refined travel with sustainability and authentic cultural connection.",
+      icon: <HeartHandshake size={20} />,
     },
-    { 
-      title: "Integrity", 
-      desc: "We operate with total transparency, backed by global accreditations.",
-      icon: <Target className="text-accent" size={24} />
+    {
+      title: "Global Expertise",
+      desc: "International standards delivered with local African mastery and insight.",
+      icon: <Globe2 size={20} />,
     },
-    { 
-      title: "Hyper-Personalization", 
-      desc: "We believe true luxury is the absence of worry and the presence of perfect timing.",
-      icon: <Users className="text-accent" size={24} />
-    }
+    {
+      title: "White-Glove Service",
+      desc: "Highly personalized planning with seamless concierge-level execution.",
+      icon: <Crown size={20} />,
+    },
   ];
 
-  const whyChooseUs = [
-    "The Connoisseur’s Edge: Specialists, not generalists. Every itinerary and corporate policy is uniquely vetted for luxury, ethics, and efficiency.",
-    "Global Credibility: Backed by an extensive network of top-tier global insurance, aviation, and technological partners.",
-    "Unwavering Support: 'Dreams don't sleep.' True 24/7 assistance, utilizing advanced data analytics and continuous research.",
-    "Impact-Driven Travel: Every journey directly funds sanitary pad banks, reforestation efforts, and youth mentorship."
+  const highlights = [
+    "Ultra-tailored luxury safaris and executive travel.",
+    "Private concierge support before, during, and after travel.",
+    "Elegant experiences designed with authenticity and comfort.",
+    "Trusted partnerships with premium lodges and global suppliers.",
   ];
 
   return (
-    <div className="bg-[#FCFAF7] min-h-screen font-sans">
+    <div className="bg-[#f8f6f2] text-[#111] overflow-hidden">
       <Navbar />
-      
-      {/* 1. HERO SECTION: Full-width Safari Background with Gradient Overlay */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <motion.div 
+
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* IMAGE */}
+        <motion.div
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute inset-0 z-0"
+          transition={{ duration: 2 }}
+          className="absolute inset-0"
         >
-          <img 
-            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068&auto=format&fit=crop" 
-            alt="About VistaVoyage Hero" 
+          <img
+            src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2070&auto=format&fit=crop"
+            alt="Luxury Safari"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
+
+          <div className="absolute inset-0 bg-black/60" />
+
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
         </motion.div>
-        
-        <div className="container mx-auto px-6 relative z-10 text-center">
+
+        {/* GOLD BLUR */}
+        <div className="absolute top-[-200px] right-[-120px] w-[500px] h-[500px] bg-[#d4af37]/20 blur-[140px] rounded-full" />
+
+        {/* CONTENT */}
+        <div className="relative z-10 max-w-6xl px-6 text-center">
           <Reveal>
-            <span className="text-accent text-xs md:text-sm uppercase tracking-[0.6em] font-bold mb-6 block drop-shadow-lg">
-              Our Legacy
-            </span>
-            <h1 className="text-5xl md:text-9xl font-serif text-white mb-8 leading-tight drop-shadow-2xl">
-              Navigating <br />
-              <span className="italic text-accent-light font-light">Dreams</span>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="w-14 h-[1px] bg-[#d4af37]" />
+
+              <span className="uppercase tracking-[0.45em] text-[#d4af37] text-[11px] font-semibold">
+                Redefining African Luxury Travel
+              </span>
+
+              <div className="w-14 h-[1px] bg-[#d4af37]" />
+            </div>
+
+            <h1 className="text-white text-6xl md:text-[8rem] leading-[0.9] tracking-[-0.08em] font-light">
+              Beyond
+              <br />
+
+              <span className="italic text-[#d4af37]">
+                The Journey
+              </span>
             </h1>
-            <div className="w-24 h-[1px] bg-accent/60 mx-auto"></div>
+
+            <p className="max-w-2xl mx-auto mt-10 text-white/70 text-lg leading-relaxed font-light">
+              VistaVoyage crafts transformative luxury experiences across Africa
+              — where bespoke adventure, executive travel, and timeless elegance
+              meet in perfect harmony.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-5 justify-center mt-14">
+              <Link
+                to="/tours"
+                className="bg-[#d4af37] hover:bg-[#e5c04b] text-[#07110d] px-10 py-5 rounded-full uppercase tracking-[0.25em] text-[11px] font-semibold transition-all duration-500 shadow-2xl"
+              >
+                Explore Journeys
+              </Link>
+
+              <Link
+                to="/contact"
+                className="border border-white/20 hover:border-[#d4af37] hover:text-[#d4af37] text-white px-10 py-5 rounded-full uppercase tracking-[0.25em] text-[11px] font-semibold transition-all duration-500 backdrop-blur-xl"
+              >
+                Contact Us
+              </Link>
+            </div>
           </Reveal>
         </div>
-        
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-50">
-          <span className="text-[10px] text-white uppercase tracking-widest">Scroll to explore</span>
-          <div className="w-[1px] h-8 bg-white/40"></div>
+
+        {/* SCROLL */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <span className="uppercase tracking-[0.35em] text-[10px] text-white/40">
+            Scroll
+          </span>
+
+          <div className="w-[1px] h-14 bg-gradient-to-b from-[#d4af37] to-transparent" />
         </div>
       </section>
 
-      {/* 2. COMPANY OVERVIEW: Alternating Layout with White Space */}
-      <section className="py-24 md:py-40">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-20 lg:gap-32">
-            <div className="lg:w-1/2 order-2 lg:order-1">
-              <Reveal>
-                <div className="inline-block px-4 py-1 border border-accent/20 rounded-full mb-8">
-                  <span className="text-accent text-[10px] uppercase tracking-widest font-bold">The Vista Experience</span>
-                </div>
-                <h2 className="text-4xl md:text-6xl font-serif text-gray-900 mb-10 leading-tight">
-                  About <span className="italic text-accent">Us</span>
-                </h2>
-                <div className="space-y-8">
-                  <p className="text-gray-600 text-lg md:text-xl font-medium leading-relaxed italic border-l-4 border-accent pl-6 py-2">
-                    VistaVoyage Travel Group is a premier, Kenya-based Global Travel Management Company (TMC) and a distinguished Safari Connoisseur. Since 2020, we have specialized in the architecture of bespoke African luxury journeys and comprehensive corporate travel solutions.
-                  </p>
-                  <p className="text-gray-500 text-lg leading-relaxed">
-                    As an IATA-accredited agency, we merge the logistical precision of global travel management with the soul of experiential exploration. We don't just book travel; we curate Intentional Journeys that harmonize luxury, efficiency, and deep environmental purpose.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-            <div className="lg:w-1/2 order-1 lg:order-2">
-              <Reveal delay={0.2}>
-                <div className="relative">
-                  <div className="absolute -inset-4 border border-accent/20 rounded-[3rem] -z-10 translate-x-4 translate-y-4"></div>
-                  <img 
-                    src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=2071&auto=format&fit=crop" 
-                    alt="VistaVoyage Excellence" 
-                    className="w-full aspect-[4/5] object-cover rounded-[3rem] shadow-2xl"
+      {/* ABOUT SECTION */}
+      <section className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-14">
+          <div className="grid lg:grid-cols-2 gap-24 items-center">
+            {/* IMAGES */}
+            <Reveal>
+              <div className="relative">
+                <div className="grid grid-cols-2 gap-5">
+                  <img
+                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2060&auto=format&fit=crop"
+                    alt=""
+                    className="rounded-[2rem] h-[500px] object-cover"
                   />
-                  <div className="absolute -bottom-10 -left-10 bg-white p-8 rounded-2xl shadow-luxury hidden md:block">
-                    <p className="text-accent font-serif text-4xl mb-1 italic">IATA</p>
-                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Accredited Excellence</p>
+
+                  <div className="space-y-5 pt-16">
+                    <img
+                      src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068&auto=format&fit=crop"
+                      alt=""
+                      className="rounded-[2rem] h-[220px] w-full object-cover"
+                    />
+
+                    <div className="bg-[#07110d] text-white rounded-[2rem] p-8">
+                      <p className="text-[#d4af37] text-5xl font-light">
+                        10+
+                      </p>
+
+                      <p className="uppercase tracking-[0.25em] text-[10px] mt-3 text-white/60">
+                        Years Curating Luxury Experiences
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* 3. MISSION & VISION: Elegant Card Blocks */}
-      <section className="py-32 bg-gray-900 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-            <Reveal>
-              <div className="group h-full p-12 md:p-16 bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-sm hover:bg-white/10 transition-all duration-700">
-                <div className="w-20 h-20 bg-accent/20 rounded-2xl flex items-center justify-center text-accent mb-12 group-hover:scale-110 transition-transform duration-500">
-                  <Target size={32} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-3xl font-serif text-white mb-8 group-hover:text-accent transition-colors">Our Mission</h3>
-                <p className="text-white/60 text-lg leading-relaxed font-light">
-                  To curate bespoke, eco-conscious journeys and robust corporate solutions that inspire, connect, and optimize. We are dedicated to transforming travel into a force for good—preserving our planet's vistas while delivering the highest standard of personalized connoisseurship to every client.
-                </p>
+                <div className="absolute -bottom-10 -left-10 w-40 h-40 border border-[#d4af37]/20 rounded-full hidden lg:block" />
               </div>
             </Reveal>
-            
+
+            {/* TEXT */}
             <Reveal delay={0.2}>
-              <div className="group h-full p-12 md:p-16 bg-accent border border-accent-dark rounded-[3rem] shadow-glow hover:shadow-accent transition-all duration-700">
-                <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-white mb-12 group-hover:scale-110 transition-transform duration-500">
-                  <Eye size={32} strokeWidth={1.5} />
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-[1px] bg-[#d4af37]" />
+
+                  <span className="uppercase tracking-[0.4em] text-[#d4af37] text-[11px] font-semibold">
+                    About VistaVoyage
+                  </span>
                 </div>
-                <h3 className="text-3xl font-serif text-white mb-8">Our Vision</h3>
-                <p className="text-white/80 text-lg leading-relaxed font-medium">
-                  To be the world’s most trusted bridge to Africa, redefining travel by seamlessly blending global logistical excellence with regenerative, soul-stirring exploration.
+
+                <h2 className="text-5xl md:text-6xl leading-[1] tracking-[-0.06em] mb-10">
+                  Crafted with
+                  <br />
+
+                  precision.
+                  <br />
+
+                  Designed for
+                  <br />
+
+                  wonder.
+                </h2>
+
+                <div className="space-y-6 text-[#555] leading-relaxed text-[15px]">
+                  <p>
+                    VistaVoyage is a Kenya-based luxury travel company creating
+                    elevated safari experiences, executive travel solutions,
+                    and immersive African adventures for discerning travelers.
+                  </p>
+
+                  <p>
+                    We combine modern sophistication with authentic destination
+                    storytelling — delivering journeys that feel seamless,
+                    personal, and unforgettable from beginning to end.
+                  </p>
+                </div>
+
+                <div className="mt-10 space-y-5">
+                  {highlights.map((item, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-[#d4af37]/10 text-[#d4af37] flex items-center justify-center flex-shrink-0">
+                        <Check size={16} />
+                      </div>
+
+                      <p className="text-[#444] leading-relaxed">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* MISSION */}
+      <section className="py-32 bg-[#07110d] relative overflow-hidden">
+        <div className="absolute top-[-200px] left-[-100px] w-[450px] h-[450px] bg-[#d4af37]/10 blur-[140px] rounded-full" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-14 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* MISSION */}
+            <Reveal>
+              <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-12 backdrop-blur-xl h-full">
+                <div className="w-16 h-16 rounded-2xl bg-[#d4af37]/10 text-[#d4af37] flex items-center justify-center mb-8">
+                  <Compass size={26} />
+                </div>
+
+                <h3 className="text-white text-4xl font-light mb-6">
+                  Our Mission
+                </h3>
+
+                <p className="text-white/65 leading-relaxed text-[15px]">
+                  To create meaningful luxury journeys that inspire connection,
+                  celebrate Africa’s beauty, and redefine travel through
+                  elegance, precision, and purpose.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* VISION */}
+            <Reveal delay={0.2}>
+              <div className="bg-[#d4af37] rounded-[2.5rem] p-12 h-full text-[#07110d]">
+                <div className="w-16 h-16 rounded-2xl bg-black/10 flex items-center justify-center mb-8">
+                  <Shield size={26} />
+                </div>
+
+                <h3 className="text-4xl font-light mb-6">
+                  Our Vision
+                </h3>
+
+                <p className="leading-relaxed text-[15px]">
+                  To become Africa’s most iconic luxury travel brand —
+                  recognized globally for unforgettable experiences,
+                  exceptional service, and transformative impact.
                 </p>
               </div>
             </Reveal>
@@ -150,33 +271,42 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 4. CORE VALUES: Clean Grid Cards with Hover Effects */}
+      {/* VALUES */}
       <section className="py-32 bg-white">
-        <div className="container mx-auto px-6">
-          <Reveal>
-            <div className="text-center mb-24">
-              <span className="text-accent text-xs uppercase tracking-[0.4em] font-bold mb-6 block">
-                The DNA of Our Service
-              </span>
-              <h2 className="text-4xl md:text-7xl font-serif text-gray-900 leading-tight">Core Values</h2>
-              <div className="w-20 h-1 bg-accent mx-auto mt-8"></div>
-            </div>
-          </Reveal>
+        <div className="max-w-7xl mx-auto px-6 lg:px-14">
+          <div className="text-center mb-20">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-12 h-[1px] bg-[#d4af37]" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {coreValues.map((value, idx) => (
-              <Reveal key={idx} delay={idx * 0.1}>
-                <motion.div 
-                  whileHover={{ y: -15 }}
-                  className="bg-surface p-10 rounded-[2.5rem] border border-gray-100 hover:bg-white hover:shadow-luxury transition-all duration-500 group h-full"
+              <span className="uppercase tracking-[0.35em] text-[#d4af37] text-[11px] font-semibold">
+                Our Philosophy
+              </span>
+
+              <div className="w-12 h-[1px] bg-[#d4af37]" />
+            </div>
+
+            <h2 className="text-5xl md:text-6xl tracking-[-0.05em]">
+              Core Values
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-[#faf8f4] border border-black/5 rounded-[2rem] p-8 hover:shadow-2xl hover:border-[#d4af37]/20 transition-all duration-500"
                 >
-                  <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-accent/10 transition-colors">
+                  <div className="w-14 h-14 rounded-2xl bg-[#d4af37]/10 text-[#d4af37] flex items-center justify-center mb-6">
                     {value.icon}
                   </div>
-                  <h4 className="text-xl font-serif text-gray-900 mb-6 group-hover:text-accent transition-colors">
+
+                  <h4 className="text-2xl mb-4">
                     {value.title}
                   </h4>
-                  <p className="text-gray-500 text-sm leading-relaxed font-medium">
+
+                  <p className="text-[#666] text-[15px] leading-relaxed">
                     {value.desc}
                   </p>
                 </motion.div>
@@ -186,84 +316,46 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 5. WHY CHOOSE US: Timeline Style Checklist */}
-      <section className="py-32 bg-[#0A0A0A] text-white relative">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-24 items-center">
-            <div className="lg:w-1/2">
-              <Reveal>
-                <span className="text-accent text-xs uppercase tracking-[0.5em] font-bold mb-6 block">
-                  Why VistaVoyage?
-                </span>
-                <h2 className="text-4xl md:text-7xl font-serif mb-16 leading-tight">
-                  The Vista <br /><span className="italic text-accent">Advantage</span>
-                </h2>
-                
-                <div className="space-y-12">
-                  {whyChooseUs.map((reason, i) => (
-                    <div key={i} className="flex gap-8 relative group">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-full border border-accent/40 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
-                        <Check size={20} />
-                      </div>
-                      <div>
-                        <p className="text-gray-300 text-lg md:text-xl font-medium leading-relaxed group-hover:text-white transition-colors">
-                          {reason}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            </div>
-            
-            <div className="lg:w-1/2 w-full">
-              <div className="grid grid-cols-2 gap-6 relative">
-                <div className="absolute inset-0 bg-accent/10 blur-[100px] -z-10 rounded-full"></div>
-                <Reveal delay={0.2}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=2030&auto=format&fit=crop" 
-                    className="rounded-[2.5rem] h-[500px] w-full object-cover shadow-2xl brightness-90" 
-                    alt="Safari Experience" 
-                  />
-                </Reveal>
-                <Reveal delay={0.4}>
-                  <div className="mt-16 space-y-6">
-                    <img 
-                      src="https://images.unsplash.com/photo-1549144464-90408226488d?q=80&w=2070&auto=format&fit=crop" 
-                      className="rounded-[2.5rem] h-64 w-full object-cover shadow-2xl brightness-75 hover:brightness-100 transition duration-700" 
-                      alt="Wildlife" 
-                    />
-                    <div className="bg-accent p-10 rounded-[2.5rem] text-center">
-                      <p className="text-5xl font-serif mb-2 italic">100%</p>
-                      <p className="text-[10px] uppercase tracking-widest font-bold">Bespoke Design</p>
-                    </div>
-                  </div>
-                </Reveal>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* IMPACT SECTION */}
+      <section className="py-32 bg-[#f8f6f2] relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-[#d4af37]/10 blur-[140px] rounded-full" />
 
-      {/* 6. CSR SECTION: Premium Impact Overlay */}
-      <section className="py-40 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-surface/50 -skew-x-12 translate-x-1/2"></div>
-        <div className="container mx-auto px-6 text-center relative z-10">
+        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
           <Reveal>
-            <div className="inline-flex items-center gap-2 mb-8 bg-gray-50 px-6 py-2 rounded-full border border-gray-100">
-              <Heart className="text-[#FFD700]" size={14} fill="currentColor" />
-              <span className="text-gray-500 text-[10px] uppercase tracking-[0.3em] font-bold">Our CSR Foundation</span>
+            <div className="inline-flex items-center gap-3 border border-black/10 rounded-full px-6 py-3 bg-white mb-8">
+              <HeartHandshake
+                size={15}
+                className="text-[#d4af37]"
+              />
+
+              <span className="uppercase tracking-[0.3em] text-[10px] font-semibold text-[#666]">
+                Kovu Afrika Foundation
+              </span>
             </div>
-            <h2 className="text-5xl md:text-9xl font-serif mb-12 tracking-tight text-gray-900">
-              Kovu <span className="italic text-[#FFD700]">Afrika</span>
+
+            <h2 className="text-5xl md:text-7xl tracking-[-0.06em] leading-[1] mb-8">
+              Luxury travel
+              <br />
+
+              with
+              <span className="italic text-[#d4af37] font-light">
+                {" "}purpose.
+              </span>
             </h2>
-            <p className="text-gray-500 text-lg md:text-2xl max-w-4xl mx-auto mb-16 leading-relaxed font-light italic">
-              "Healing Landscapes, Empowering Lives". Kovu Afrika represents our commitment to leaving a positive, healing mark on the African continent. It is the bedrock of our Eco-Luxury philosophy.
+
+            <p className="text-[#666] text-lg leading-relaxed max-w-3xl mx-auto mb-14">
+              Every VistaVoyage experience contributes toward sustainability,
+              conservation, and empowering communities across Africa through
+              meaningful impact initiatives.
             </p>
-            
-            <Link to="/csr" className="group inline-flex items-center gap-4 bg-gray-900 text-white px-12 py-6 rounded-xl hover:bg-accent transition-all duration-500 shadow-xl">
-              <span className="uppercase tracking-[0.2em] font-bold text-sm">Our Impact Story</span>
-              <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+
+            <Link
+              to="/csr"
+              className="inline-flex items-center gap-4 bg-[#07110d] hover:bg-[#d4af37] hover:text-[#07110d] text-white px-10 py-5 rounded-full uppercase tracking-[0.25em] text-[11px] font-semibold transition-all duration-500"
+            >
+              Explore Our Impact
+
+              <ArrowRight size={16} />
             </Link>
           </Reveal>
         </div>

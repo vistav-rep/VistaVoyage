@@ -1,120 +1,184 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Trophy, Hotel, MapPin } from 'lucide-react';
-import Reveal from './Reveal';
-import maasaiImg from "../assets/Maasai.jpeg"
-//import safari6Img from"../assets/SAFARI6.jpg
-import mainImage from '../assets/WRC - Safari 2023.jpeg';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Hotel, MapPin } from "lucide-react";
+
+import mainImage from "../assets/WRC - Safari 2023.jpeg";
+import maasaiImg from "../assets/Maasai.jpeg";
 
 const SafariRallySection = () => {
   return (
-    <section className="py-24 px-6 md:px-20 bg-[#f8f6f2] relative">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+    <section className="bg-[#f7f5f1] py-28 px-6 md:px-20 overflow-hidden">
 
-        {/* LEFT: IMAGE */}
-        <div className="relative flex justify-center md:justify-start">
-          <Reveal>
-            <img
-              src={mainImage}
-              alt="WRC Safari Rally"
-              className="w-[320px] md:w-[380px] h-[420px] object-cover shadow-md"
-            />
-          </Reveal>
-        </div>
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
 
-        {/* RIGHT: TEXT */}
-        <div className="space-y-8 text-center md:text-left">
-          
-          <Reveal>
-            <p className="text-[#0B3D2E] uppercase tracking-[0.3em] text-xs font-semibold">
-              Limited Time Offer
-            </p>
-          </Reveal>
+        {/* LEFT SIDE IMAGES */}
+        <div className="grid grid-cols-2 gap-6 items-end">
 
-          <Reveal delay={0.1}>
-            <h2 className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight">
-              Exclusive WRC <br />
-              <span className="italic text-[#7A0C0C]">Safari Rally</span> Experience
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <p className="text-gray-500 leading-relaxed text-base max-w-md mx-auto md:mx-0">
-              Don't miss out on the thrill of the 2025 WRC Safari Rally in Naivasha.
-              We've secured premium accommodation at the most sought-after lodges,
-              offering you front-row access to one of the world’s most iconic rally events.
-            </p>
-          </Reveal>
-
-          {/* FEATURES */}
-          <div className="space-y-4 pt-2">
-            <Reveal delay={0.3}>
-              <div className="flex items-center gap-4 justify-center md:justify-start">
-                <Hotel className="text-[#0f1e3f]" size={20} />
-                <div>
-                  <p className="font-semibold text-gray-800">Premium Lodging</p>
-                  <p className="text-sm text-gray-500">Sarova Lion Hill & Sawela</p>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.4}>
-              <div className="flex items-center gap-4 justify-center md:justify-start">
-                <MapPin className="text-[#0f1e3f]" size={20} />
-                <div>
-                  <p className="font-semibold text-gray-800">Elite Locations</p>
-                  <p className="text-sm text-gray-500">Naivasha Circuit Access</p>
-                </div>
-              </div>
-            </Reveal>
+          {/* LARGE IMAGE */}
+          <div className="col-span-1">
+            <div className="overflow-hidden rounded-[32px] shadow-2xl">
+              <img
+                src={mainImage}
+                alt="Safari Rally"
+                className="w-full h-[620px] object-cover hover:scale-105 transition duration-700"
+              />
+            </div>
           </div>
 
-          {/* PRICE */}
-          <Reveal delay={0.5}>
-            <div>
-              <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">
-                Starting from
-              </p>
-              <p className="text-4xl font-serif text-[#430101]">
-                $134
-                <span className="text-sm text-gray-500 ml-2">/pn</span>
-              </p>
-            </div>
-          </Reveal>
+          {/* SECOND COLUMN */}
+          <div className="flex flex-col gap-6">
 
-          {/* CTA */}
-          <Reveal delay={0.6}>
+            {/* SMALL IMAGE */}
+            <div className="overflow-hidden rounded-[28px] shadow-xl">
+              <img
+                src={maasaiImg}
+                alt="Maasai Experience"
+                className="w-full h-[260px] object-cover hover:scale-105 transition duration-700"
+              />
+            </div>
+
+            {/* LUXURY INFO CARD */}
+            <div className="bg-white rounded-[28px] p-8 shadow-lg">
+
+              <p
+                className="uppercase tracking-[0.3em] text-xs mb-3"
+                style={{ color: "#c8a248" }}
+              >
+                Elite Experience
+              </p>
+
+              <h3 className="text-3xl font-bold text-[#111] mb-4 leading-tight">
+                Safari Rally <br />
+                Kenya 2025
+              </h3>
+
+              <p className="text-[#666] leading-relaxed">
+                A curated rally and safari journey crafted for travelers
+                who appreciate luxury, speed, wilderness, and unforgettable
+                moments.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* RIGHT SIDE CONTENT */}
+        <div>
+
+          {/* SMALL LABEL */}
+          <p
+            className="uppercase tracking-[0.35em] text-sm mb-6"
+            style={{ color: "#c8a248" }}
+          >
+            Limited Time Offer
+          </p>
+
+          {/* HEADING */}
+          <h2 className="text-5xl lg:text-7xl font-bold leading-[1.05] text-[#111] mb-8">
+
+            WRC Safari
+            <br />
+
+            <span style={{ color: "#0b3d2e" }}>
+              Rally Experience
+            </span>
+
+          </h2>
+
+          {/* DESCRIPTION */}
+          <p className="text-[#555] text-lg leading-relaxed mb-12 max-w-xl">
+            Discover the thrill of the legendary Safari Rally with luxury
+            accommodation, premium viewing access, curated excursions,
+            and world-class hospitality across Kenya’s breathtaking
+            landscapes.
+          </p>
+
+          {/* FEATURES */}
+          <div className="space-y-8 mb-14">
+
+            {/* FEATURE */}
+            <div className="flex items-start gap-5">
+
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ backgroundColor: "#ebe4d3" }}
+              >
+                <Hotel size={24} style={{ color: "#0b3d2e" }} />
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-[#111] mb-1">
+                  Premium Lodging
+                </h3>
+
+                <p className="text-[#666]">
+                  Stay at Sarova Lion Hill & Sawela Lodges
+                </p>
+              </div>
+
+            </div>
+
+            {/* FEATURE */}
+            <div className="flex items-start gap-5">
+
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ backgroundColor: "#ebe4d3" }}
+              >
+                <MapPin size={24} style={{ color: "#0b3d2e" }} />
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-[#111] mb-1">
+                  VIP Rally Access
+                </h3>
+
+                <p className="text-[#666]">
+                  Front-row access to iconic Naivasha rally stages
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* PRICE + BUTTON */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-8">
+
+            {/* PRICE */}
+            <div>
+
+              <p className="uppercase tracking-[0.25em] text-xs text-[#777] mb-2">
+                Starting From
+              </p>
+
+              <h3
+                className="text-5xl font-bold"
+                style={{ color: "#c8a248" }}
+              >
+                $134
+                <span className="text-lg text-[#777] font-normal ml-2">
+                  / night
+                </span>
+              </h3>
+
+            </div>
+
+            {/* BUTTON */}
             <Link
               to="/tours"
-              className="inline-block text-sm tracking-widest uppercase text-black border-b border-black pb-1 hover:opacity-70 transition"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-white text-sm tracking-wide transition duration-300 hover:scale-105"
+              style={{ backgroundColor: "#0b3d2e" }}
             >
-              Book Your Spot Now
+              Book Your Spot
             </Link>
-          </Reveal>
+
+          </div>
 
         </div>
 
-      </div>
-
-      {/* BOTTOM RIGHT WILDLIFE IMAGES */}
-      <div className="hidden md:block absolute bottom-10 right-10">
-        <div className="relative">
-
-          {/* Image 1 */}
-          <img
-            src={maasaiImg}
-            alt="Maasai Mara Wildlife"
-            className="w-[160px] h-[120px] object-cover shadow-lg border-4 border-white"
-          />
-
-          {/* Image 2 (slightly offset) */}
-         // <img
-          //  src={safari6Img}
-          //  alt="Safari Animals"
-           // className="w-[140px] h-[100px] object-cover shadow-md border-4 border-white absolute -bottom-8 -left-16"
-          />
-
-        </div>
       </div>
 
     </section>

@@ -12,7 +12,13 @@ const generateQuotePDF = async (data, filename) => {
       doc.pipe(stream);
 
       // Add Logo or Header
-      doc.fontSize(25).text('VISTAVOYAGE', { align: 'center' });
+      const logoPath = path.join(__dirname, '../../frontend/src/assets/vl.png');
+      if (fs.existsSync(logoPath)) {
+        doc.image(logoPath, { fit: [150, 50], align: 'center' });
+        doc.moveDown();
+      } else {
+        doc.fontSize(25).text('VISTAVOYAGE', { align: 'center' });
+      }
       doc.fontSize(10).text('Curated Journeys & Exclusive Experiences', { align: 'center' });
       doc.moveDown();
 

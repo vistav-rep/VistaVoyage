@@ -15,6 +15,10 @@ import AppointmentsPage from './pages/AppointmentsPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminCRM from './pages/AdminCRM';
+import LoginPage from './pages/LoginPage';
+import CheckoutPage from './pages/CheckoutPage';
+import StaffLogin from './pages/StaffLogin';
 import Loader from './components/Loader';
 import ChatDrawer from './components/ChatDrawer';
 import ScrollToTop from './components/ScrollToTop';
@@ -75,6 +79,10 @@ function App() {
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/crm" element={<AdminCRM />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/staff/login" element={<StaffLogin />} />
       </Routes>
 
       <ChatDrawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
@@ -83,7 +91,7 @@ function App() {
       {!loading && (
         <button 
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-10 left-10 z-[90] flex items-center gap-3 bg-[#0A0A0A] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-jungle transition-all duration-500 group animate-fade-in border border-white/10"
+          className="fixed bottom-10 left-10 z-[90] flex items-center gap-3 bg-primary text-white px-6 py-4 rounded-full shadow-2xl hover:bg-secondary transition-all duration-500 group animate-fade-in border border-white/10"
         >
           <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform">
             <MessageSquare size={16} className="text-black" />
@@ -96,7 +104,7 @@ function App() {
       {showBackToTop && (
         <button 
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 z-[90] w-14 h-14 bg-dark text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-accent transition-all duration-500 group animate-fade-in-up"
+          className="fixed bottom-10 right-10 z-[90] w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-secondary transition-all duration-500 group animate-fade-in-up"
         >
           <ArrowUp className="group-hover:-translate-y-1 transition-transform" size={24} />
         </button>
