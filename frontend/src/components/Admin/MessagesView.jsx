@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const MessagesView = () => {
   const [messages, setMessages] = useState([]);
@@ -17,8 +18,8 @@ const MessagesView = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await api.get('/bookings');
-      const messageData = response.data
+      const response = await api.get('/bookings?limit=500&page=1');
+      const messageData = listItemsFromResponse(response)
         .filter(b => b.metadata?.message || b.metadata?.consultationType)
         .map(b => ({
           id: b._id,

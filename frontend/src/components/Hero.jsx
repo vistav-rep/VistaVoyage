@@ -31,15 +31,16 @@ const slides = [
 
 const images = [img1, img2];
 
-const Hero = () => {
+const Hero = ({ skipBrandIntro = false }) => {
   const [index, setIndex] = useState(0);
-  const [intro, setIntro] = useState(true);
+  const [intro, setIntro] = useState(!skipBrandIntro);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const t = setTimeout(() => setIntro(false), 4000);
+    if (skipBrandIntro) return;
+    const t = setTimeout(() => setIntro(false), 2500);
     return () => clearTimeout(t);
-  }, []);
+  }, [skipBrandIntro]);
 
   useEffect(() => {
     if (!intro) {

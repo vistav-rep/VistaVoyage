@@ -2,8 +2,28 @@ const Tour = require('../models/Tour');
 
 const getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find().sort({ createdAt: -1 });
-    res.json(tours);
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(200, Math.max(1, parseInt(req.query.limit, 10) || 50));
+    const skip = (page - 1) * limit;
+
+    const [tours, total] = await Promise.all([
+      Tour.find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Tour.countDocuments(),
+    ]);
+
+    res.json({
+      data: tours,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.max(1, Math.ceil(total / limit)),
+      },
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -11,7 +31,7 @@ const getAllTours = async (req, res) => {
 
 const getFeaturedTours = async (req, res) => {
   try {
-    const tours = await Tour.find({ tag: 'Best Seller' }); // or any logic for featured
+    const tours = await Tour.find({ tag: 'Best Seller' }).lean();
     res.json(tours);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -21,7 +41,7 @@ const getFeaturedTours = async (req, res) => {
 const getTourById = async (req, res) => {
   const { id } = req.params;
   try {
-    const tour = await Tour.findById(id);
+    const tour = await Tour.findById(id).lean();
     if (!tour) return res.status(404).json({ message: 'Tour not found' });
     res.json(tour);
   } catch (error) {

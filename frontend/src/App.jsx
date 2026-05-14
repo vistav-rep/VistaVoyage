@@ -1,54 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import AboutPage from './pages/AboutPage';
-import CorporateServices from './pages/CorporateServices';
-import BecomePartner from './pages/BecomePartner';
-import PartnerApplyPage from './pages/PartnerApplyPage';
-import PartnerDashboard from './pages/PartnerDashboard';
-import BlogPage from './pages/BlogPage';
-import AddBlogPage from './pages/AddBlogPage';
-import ToursPage from './pages/ToursPage';
-import TrendsPage from './pages/TrendsPage';
-import TourDetails from './pages/TourDetails';
-import AppointmentsPage from './pages/AppointmentsPage';
-import GalleryPage from './pages/GalleryPage';
-import ContactPage from './pages/ContactPage';
-import AdminDashboard from './pages/AdminDashboard';
-import Loader from './components/Loader';
 import ChatDrawer from './components/ChatDrawer';
 import ScrollToTop from './components/ScrollToTop';
+import RouteFallback from './components/RouteFallback';
 import { ArrowUp, MessageSquare } from 'lucide-react';
 import './App.css';
 
+const Home = lazy(() => import('./pages/Home'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const CorporateServices = lazy(() => import('./pages/CorporateServices'));
+const BecomePartner = lazy(() => import('./pages/BecomePartner'));
+const PartnerApplyPage = lazy(() => import('./pages/PartnerApplyPage'));
+const PartnerDashboard = lazy(() => import('./pages/PartnerDashboard'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const AddBlogPage = lazy(() => import('./pages/AddBlogPage'));
+const ToursPage = lazy(() => import('./pages/ToursPage'));
+const TrendsPage = lazy(() => import('./pages/TrendsPage'));
+const TourDetails = lazy(() => import('./pages/TourDetails'));
+const AppointmentsPage = lazy(() => import('./pages/AppointmentsPage'));
+const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+
 function App() {
-  const [loading, setLoading] = useState(true);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
-    // Scroll to top on refresh
     window.scrollTo(0, 0);
-    
-    // Disable scrolling while loading
-    document.body.style.overflow = "hidden";
 
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
-    
-    const timer = setTimeout(() => {
-      setLoading(false);
-      document.body.style.overflow = "auto";
-    }, 2500); // Duration matches loader animation + extra buffer
-
-    return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = "auto";
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToTop = () => {
@@ -57,44 +43,43 @@ function App() {
 
   return (
     <Router>
-      {loading && <Loader />}
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/corporate" element={<CorporateServices />} />
-        <Route path="/partners" element={<BecomePartner />} />
-        <Route path="/partners/apply" element={<PartnerApplyPage />} />
-        <Route path="/partner/dashboard" element={<PartnerDashboard />} />
-        <Route path="/blogs" element={<BlogPage />} />
-        <Route path="/blogs/add" element={<AddBlogPage />} />
-        <Route path="/tours" element={<ToursPage />} />
-        <Route path="/trends" element={<TrendsPage />} />
-        <Route path="/travel/:id" element={<TourDetails />} />
-        <Route path="/appointments" element={<AppointmentsPage />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/corporate" element={<CorporateServices />} />
+          <Route path="/partners" element={<BecomePartner />} />
+          <Route path="/partners/apply" element={<PartnerApplyPage />} />
+          <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+          <Route path="/blogs" element={<BlogPage />} />
+          <Route path="/blogs/add" element={<AddBlogPage />} />
+          <Route path="/tours" element={<ToursPage />} />
+          <Route path="/trends" element={<TrendsPage />} />
+          <Route path="/travel/:id" element={<TourDetails />} />
+          <Route path="/appointments" element={<AppointmentsPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </Suspense>
 
       <ChatDrawer isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-      {/* Chat With Us Button */}
-      {!loading && (
-        <button 
-          onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-10 left-10 z-[90] flex items-center gap-3 bg-[#0A0A0A] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-jungle transition-all duration-500 group animate-fade-in border border-white/10"
-        >
-          <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform">
-            <MessageSquare size={16} className="text-black" />
-          </div>
-          <span className="text-sm font-bold uppercase tracking-widest">Chat With Us</span>
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-10 left-10 z-[90] flex items-center gap-3 bg-[#0A0A0A] text-white px-6 py-4 rounded-full shadow-2xl hover:bg-jungle transition-all duration-500 group animate-fade-in border border-white/10"
+      >
+        <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform">
+          <MessageSquare size={16} className="text-black" />
+        </div>
+        <span className="text-sm font-bold uppercase tracking-widest">Chat With Us</span>
+      </button>
 
-      {/* Back to Top Arrow */}
       {showBackToTop && (
-        <button 
+        <button
+          type="button"
           onClick={scrollToTop}
           className="fixed bottom-10 right-10 z-[90] w-14 h-14 bg-dark text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-accent transition-all duration-500 group animate-fade-in-up"
         >

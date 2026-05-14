@@ -1,4 +1,5 @@
 const express = require("express");
+const compression = require("compression");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -58,10 +59,19 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('io', io);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"), {
+    maxAge: 24 * 60 * 60 * 1000,
+    setHeaders(res) {
+      res.setHeader("Cache-Control", "public, max-age=86400");
+    },
+  })
+);
 
 // ---------- ROUTES ----------
 app.get("/api/health", (req, res) => {
@@ -76,6 +86,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const partnerRoutes = require("./routes/partnerRoutes");
 const seasonRoutes = require("./routes/seasonRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
@@ -84,6 +95,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/partners", partnerRoutes);
 app.use("/api/seasons", seasonRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 
 console.log('✅ All routes initialized');

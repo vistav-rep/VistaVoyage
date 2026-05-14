@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { CreditCard, Download, ArrowUpRight, ArrowDownRight, Clock, Trash2, Edit2, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const BillingView = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading]   = useState(true);
 
   useEffect(() => {
-    api.get('/bookings').then(r => {
-      setBookings(Array.isArray(r.data) ? r.data : []);
+    api.get('/bookings?limit=300&page=1').then((r) => {
+      setBookings(listItemsFromResponse(r));
     }).catch(() => {}).finally(() => setLoading(false));
   }, []);
 

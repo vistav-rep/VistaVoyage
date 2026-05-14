@@ -4,13 +4,42 @@ import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import api from '../api/axios';
+
+const initialFormData = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+};
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    try {
+      setLoading(true);
+      setError('');
+
+      await api.post('/contact', {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      });
+
+      setFormData(initialFormData);
+      setSubmitted(true);
+    } catch (submitError) {
+      setError(submitError.response?.data?.message || 'Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,7 +94,7 @@ const ContactPage = () => {
                 <div className="space-y-16">
                   {/* Address */}
                   <div className="flex flex-col gap-4">
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-500">
+                    <span className="text-[10px] uppercase tracking-ultra-wide font-bold text-gray-500">
                       Address
                     </span>
 
@@ -82,7 +111,7 @@ const ContactPage = () => {
 
                   {/* Phone */}
                   <div className="flex flex-col gap-4">
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-500">
+                    <span className="text-[10px] uppercase tracking-ultra-wide font-bold text-gray-500">
                       Reservation
                     </span>
 
@@ -104,7 +133,7 @@ const ContactPage = () => {
 
                   {/* Email */}
                   <div className="flex flex-col gap-4">
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-500">
+                    <span className="text-[10px] uppercase tracking-ultra-wide font-bold text-gray-500">
                       Email Info
                     </span>
 
@@ -154,7 +183,11 @@ const ContactPage = () => {
                     </p>
 
                     <button
-                      onClick={() => setSubmitted(false)}
+                      onClick={() => {
+                        setFormData(initialFormData);
+                        setError('');
+                        setSubmitted(false);
+                      }}
                       className="text-[#C8A96A] font-bold uppercase tracking-widest text-[10px] border-b border-[#C8A96A]/30 pb-2 hover:border-[#C8A96A] transition-all"
                     >
                       Send Another Message
@@ -162,6 +195,12 @@ const ContactPage = () => {
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-12">
+
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-xl text-xs font-semibold tracking-wide uppercase">
+                        {error}
+                      </div>
+                    )}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                       <div className="border-b border-gray-300 py-4 focus-within:border-[#C8A96A]">
@@ -172,6 +211,8 @@ const ContactPage = () => {
                           type="text"
                           required
                           placeholder="Your Name"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                         />
                       </div>
@@ -184,6 +225,8 @@ const ContactPage = () => {
                           type="email"
                           required
                           placeholder="Email Address"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                         />
                       </div>
@@ -196,6 +239,8 @@ const ContactPage = () => {
                       <input
                         type="text"
                         placeholder="Inquiry Topic"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400"
                       />
                     </div>
@@ -208,12 +253,18 @@ const ContactPage = () => {
                         rows="4"
                         required
                         placeholder="How can we help you?"
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         className="w-full bg-transparent outline-none text-gray-900 font-semibold placeholder:text-gray-400 resize-none"
                       ></textarea>
                     </div>
 
-                    <button className="btn-primary !px-16 flex items-center gap-4 shadow-lg hover:shadow-xl transition-all">
-                      Send Message
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="btn-primary px-16! flex items-center gap-4 shadow-lg hover:shadow-xl transition-all disabled:opacity-70"
+                    >
+                      {loading ? 'Sending...' : 'Send Message'}
                       <Send size={14} />
                     </button>
                   </form>
@@ -226,7 +277,7 @@ const ContactPage = () => {
 
       {/* Map Section */}
       <section className="relative bg-black text-white overflow-hidden">
-        <div className="h-[500px] w-full relative">
+        <div className="h-125 w-full relative">
           <iframe
              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.81394200115!2d36.7788779114777!3d-1.2994958986835266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f11ceca23f0f5%3A0x5b6a28559205140a!2sVistaVoyage%20Travel%20Group%20Ltd!5e0!3m2!1sen!2ske!4v1715243000000!5m2!1sen!2ske"
             className="w-full h-full contrast-125 brightness-90"
@@ -235,12 +286,12 @@ const ContactPage = () => {
             title="VistaVoyage Location"
           ></iframe>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent"></div>
         </div>
 
         <div className="container mx-auto px-6 text-center relative z-10 -mt-32 pb-32">
           <Reveal>
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/40">
+            <span className="text-[10px] uppercase tracking-ultra-wide font-bold text-white/40">
               Reservation
             </span>
 

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const PaymentsView = () => {
   const [payments, setPayments] = useState([]);
@@ -18,9 +19,9 @@ const PaymentsView = () => {
 
   const fetchPayments = async () => {
     try {
-      const response = await api.get('/bookings');
+      const response = await api.get('/bookings?limit=500&page=1');
       // Using booking data to mock payments for now
-      const paymentData = response.data
+      const paymentData = listItemsFromResponse(response)
         .filter(b => b.paymentStatus === 'PAID' || b.paymentStatus === 'PARTIALLY_PAID')
         .map(b => ({
           id: b._id,

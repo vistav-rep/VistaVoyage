@@ -1,8 +1,9 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Plus, Search, HelpCircle, LayoutDashboard, Clock, CheckCircle2, XCircle, MoreVertical, Compass, List } from 'lucide-react';
 
-const Sidebar = ({ activeTab = 'Everything', setActiveTab, bookings = [] }) => {
-  const counts = {
+const Sidebar = ({ activeTab = 'Everything', setActiveTab, bookings = [], tabCounts }) => {
+  const counts = tabCounts || {
     Everything: bookings.length,
     New: bookings.filter(b => (b.workflowStatus || 'NEW') === 'NEW').length,
     'Working On': bookings.filter(b => ['ASSIGNED', 'QUOTE_SENT', 'PENDING_CONFIRMATION'].includes(b.workflowStatus)).length,

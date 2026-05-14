@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const StaffActivity = () => {
   const [tasks, setTasks] = useState([]);
@@ -26,12 +27,12 @@ const StaffActivity = () => {
   const fetchData = async () => {
     try {
       const [tasksRes, staffRes, activityRes, bookingsRes] = await Promise.all([
-        api.get('/admin/tasks'), api.get('/admin/staff'), api.get('/admin/activity'), api.get('/bookings')
+        api.get('/admin/tasks'), api.get('/admin/staff'), api.get('/admin/activity'), api.get('/bookings?limit=200&page=1')
       ]);
       setTasks(Array.isArray(tasksRes.data) ? tasksRes.data : []);
       setStaff(Array.isArray(staffRes.data) ? staffRes.data : []);
       setActivities(Array.isArray(activityRes.data) ? activityRes.data : []);
-      setBookings(Array.isArray(bookingsRes.data) ? bookingsRes.data : []);
+      setBookings(listItemsFromResponse(bookingsRes));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
@@ -9,17 +8,18 @@ import nairobi from '../assets/Nairobi.jpg'
 
 import api from '../api/axios';
 
+const initialFormData = {
+  name: '',
+  email: '',
+  phone: '',
+  date: '',
+  time: '',
+  consultationType: 'Luxury Tours',
+  message: ''
+};
+
 const AppointmentsPage = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    date: '',
-    time: '',
-    consultationType: 'Luxury Tours',
-    message: ''
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,8 +44,9 @@ const AppointmentsPage = () => {
         },
         totalPrice: 35 // Discounted fee as mentioned in UI
       });
-
+      
       setLoading(false);
+      setFormData(initialFormData);
       setSubmitted(true);
     } catch (err) {
       setError(err.response?.data?.message || err.message);
@@ -67,7 +68,7 @@ const AppointmentsPage = () => {
         </div>
         <div className="container mx-auto px-6 relative z-10 text-center">
           <Reveal>
-            <span className="text-accent text-[9px] uppercase tracking-[0.4em] font-bold mb-6 block">
+            <span className="text-accent text-[9px] uppercase tracking-ultra-wide font-bold mb-6 block">
               Personalized Planning
             </span>
             <h1 className="text-4xl md:text-7xl font-serif text-white mb-8">
@@ -132,7 +133,10 @@ const AppointmentsPage = () => {
                         Your consultation request has been received. Our team will contact you shortly to confirm your preferred time slot and provide payment details for the consultation fee.
                       </p>
                       <button 
-                        onClick={() => setSubmitted(false)}
+                        onClick={() => {
+                          setFormData(initialFormData);
+                          setSubmitted(false);
+                        }}
                         className="btn-primary"
                       >
                         Book Another Session
@@ -147,22 +151,22 @@ const AppointmentsPage = () => {
                       )}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Full Name</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Full Name</label>
                           <input 
                             type="text" 
                             required
-                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-primary/20 font-bold rounded-2xl" 
+                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-dark/40 font-bold rounded-2xl" 
                             placeholder="Your Name"
                             value={formData.name}
                             onChange={(e) => setFormData({...formData, name: e.target.value})}
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Email Address</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Email Address</label>
                           <input 
                             type="email" 
                             required
-                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-primary/20 font-bold rounded-2xl" 
+                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-dark/40 font-bold rounded-2xl" 
                             placeholder="email@example.com"
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -172,18 +176,18 @@ const AppointmentsPage = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Phone Number</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Phone Number</label>
                           <input 
                             type="tel" 
                             required
-                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-primary/20 font-bold rounded-2xl" 
+                            className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-dark/40 font-bold rounded-2xl" 
                             placeholder="+254..."
                             value={formData.phone}
                             onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Consultation Topic</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Consultation Topic</label>
                           <select 
                             className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all font-bold rounded-2xl appearance-none"
                             value={formData.consultationType}
@@ -199,7 +203,7 @@ const AppointmentsPage = () => {
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Preferred Date</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Preferred Date</label>
                           <input 
                             type="date" 
                             required
@@ -209,7 +213,7 @@ const AppointmentsPage = () => {
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Preferred Time</label>
+                          <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Preferred Time</label>
                           <input 
                             type="time" 
                             required
@@ -221,17 +225,17 @@ const AppointmentsPage = () => {
                       </div>
 
                       <div>
-                        <label className="text-[10px] uppercase tracking-widest font-bold text-primary mb-3 block">Additional Details</label>
+                        <label className="text-[10px] uppercase tracking-widest font-bold text-dark mb-3 block">Additional Details</label>
                         <textarea 
                           rows="4"
-                          className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-primary/20 font-bold rounded-2xl resize-none" 
+                          className="w-full bg-surface border-none px-6 py-4 text-xs focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-dark/40 font-bold rounded-2xl resize-none" 
                           placeholder="Tell us about your travel plans..."
                           value={formData.message}
                           onChange={(e) => setFormData({...formData, message: e.target.value})}
                         ></textarea>
                       </div>
 
-                      <button type="submit" disabled={loading} className="btn-primary w-full !py-5 disabled:opacity-70 flex items-center justify-center gap-3">
+                      <button type="submit" disabled={loading} className="btn-primary w-full py-5! disabled:opacity-70 flex items-center justify-center gap-3">
                         {loading ? (
                           <>
                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
