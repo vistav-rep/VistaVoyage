@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const MessagesView = () => {
   const [messages, setMessages] = useState([]);
@@ -17,16 +18,20 @@ const MessagesView = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await api.get('/messages');
-      const messageData = response.data.map(m => ({
-        id: m._id,
-        sender: m.name,
-        email: m.email,
-        subject: m.subject || 'No Subject',
-        message: m.message,
-        date: m.createdAt,
-        status: m.status === 'NEW' ? 'New' : 'Processed',
-      }));
+      const response = await api.get('/bookings?limit=500&page=1');
+      const messageData = listItemsFromResponse(response)
+        .filter(b => b.metadata?.message || b.metadata?.consultationType)
+        .map(b => ({
+          id: b._id,
+          sender: b.guestName,
+          email: b.guestEmail,
+          phone: b.guestPhone,
+          subject: b.type === 'APPOINTMENT' ? `Consultation: ${b.metadata?.consultationType}` : `Package Interest: ${b.tour?.title || 'Adventure'}`,
+          message: b.metadata?.message || 'New booking inquiry received.',
+          date: b.createdAt,
+          status: b.status === 'PENDING' ? 'New' : 'Processed',
+          type: b.type
+        }));
       setMessages(messageData);
       if (messageData.length > 0) setSelectedMessage(messageData[0]);
       setLoading(false);

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const StatCard = ({ title, value, change, icon: Icon, gradient, delay }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -37,11 +38,11 @@ const DashboardHome = () => {
   useEffect(() => {
     Promise.all([
       api.get('/admin/stats'),
-      api.get('/bookings'),
+      api.get('/bookings?limit=50&page=1'),
       api.get('/admin/activity'),
     ]).then(([s, b, a]) => {
       setStats(s.data || {});
-      setRecentBookings(Array.isArray(b.data) ? b.data.slice(0, 5) : []);
+      setRecentBookings(listItemsFromResponse(b).slice(0, 5));
       setActivities(Array.isArray(a.data) ? a.data.slice(0, 6) : []);
     }).catch(() => {}).finally(() => setLoading(false));
   }, []);

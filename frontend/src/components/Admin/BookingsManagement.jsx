@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import { listItemsFromResponse } from '../../utils/apiList';
 
 const BookingsManagement = ({ initialType = 'ALL' }) => {
   const [bookings, setBookings] = useState([]);
@@ -62,10 +63,10 @@ const BookingsManagement = ({ initialType = 'ALL' }) => {
   const fetchData = async () => {
     try {
       const [bookingsRes, staffRes] = await Promise.all([
-        api.get('/bookings'),
+        api.get('/bookings?limit=500&page=1'),
         api.get('/admin/staff')
       ]);
-      setBookings(Array.isArray(bookingsRes.data) ? bookingsRes.data : []);
+      setBookings(listItemsFromResponse(bookingsRes));
       setStaff(Array.isArray(staffRes.data) ? staffRes.data : []);
       setLoading(false);
     } catch (error) {

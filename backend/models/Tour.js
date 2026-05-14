@@ -21,4 +21,7 @@ const tourSchema = new mongoose.Schema({
   exclusions: [String]
 }, { timestamps: true });
 
+tourSchema.index({ createdAt: -1 });
+tourSchema.index({ tag: 1 });
+
 module.exports = mongoose.model('Tour', tourSchema);

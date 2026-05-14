@@ -342,15 +342,67 @@ const createBooking = async (req, res) => {
 
 const getBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find()
-      .populate('tour')
-      .populate('confirmedBy', 'name role')
-      .populate('quotedBy', 'name role')
-      .populate('respondedBy', 'name role')
-      .populate('assignedWorkers', 'name role email status')
-      .populate('internalNotes.author', 'name role')
-      .sort({ createdAt: -1 });
-    res.json(bookings);
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(500, Math.max(1, parseInt(req.query.limit, 10) || 100));
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (req.query.type) {
+      filter.type = req.query.type;
+    }
+    if (req.query.workflowStatus) {
+      filter.workflowStatus = req.query.workflowStatus;
+    } else if (req.query.workflowStatuses) {
+      const list = req.query.workflowStatuses
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (list.length) {
+        filter.workflowStatus = { $in: list };
+      }
+    }
+
+    // Counts for tab badges: only apply broad filters (e.g. type), not workflow list filters
+    const countFilter = {};
+    if (req.query.type) {
+      countFilter.type = req.query.type;
+    }
+
+    const [bookings, total, scopeTotal, statusAgg] = await Promise.all([
+      Booking.find(filter)
+        .populate('tour')
+        .populate('confirmedBy', 'name role')
+        .populate('quotedBy', 'name role')
+        .populate('respondedBy', 'name role')
+        .populate('assignedWorkers', 'name role email status')
+        .populate('internalNotes.author', 'name role')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Booking.countDocuments(filter),
+      Booking.countDocuments(countFilter),
+      Booking.aggregate([
+        { $match: countFilter },
+        { $group: { _id: '$workflowStatus', n: { $sum: 1 } } },
+      ]),
+    ]);
+
+    const workflowCounts = Object.fromEntries(
+      statusAgg.map((x) => [x._id || 'UNKNOWN', x.n])
+    );
+
+    res.json({
+      data: bookings,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.max(1, Math.ceil(total / limit)),
+        scopeTotal,
+      },
+      workflowCounts,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -122,12 +122,14 @@ const ToursPage = () => {
       {/* REFINED CTA */}
       <section className="py-40 bg-surface/50 border-t border-primary/5">
         <div className="container mx-auto px-6 text-center">
-          <Reveal>
-            <h3 className="text-4xl md:text-6xl font-serif text-primary mb-12">Experience the Unimagined</h3>
-            <button className="px-16 py-6 bg-primary text-white rounded-full text-[11px] uppercase tracking-[0.4em] font-bold hover:bg-accent transition-all duration-700 shadow-xl">
-              Inquire Privately
-            </button>
-          </Reveal>
+          <Reveal.fromBottom delay={0.05} once={false}>
+            <h3 className="text-4xl md:text-6xl font-serif text-primary mb-6 md:mb-12">Experience the Unimagined</h3>
+            <div className="flex items-center justify-center">
+              <button className="w-full md:w-auto px-8 md:px-16 py-4 md:py-6 bg-accent text-white rounded-full text-[11px] uppercase tracking-wide md:tracking-[0.4em] font-bold hover:bg-accent-dark transition-all duration-700 shadow-xl">
+                Inquire Privately
+              </button>
+            </div>
+          </Reveal.fromBottom>
         </div>
       </section>
 
