@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import TourCard from '../components/TourCard';
 import Reveal from '../components/Reveal';
 
+import api from '../api/axios';
+
 const TrendsPage = () => {
   const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,9 +13,8 @@ const TrendsPage = () => {
   useEffect(() => {
     const fetchTrends = async () => {
       try {
-        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-        const response = await fetch(`${base}/tours?limit=100&page=1`);
-        const data = await response.json();
+        const response = await api.get('/tours?limit=100&page=1');
+        const data = response.data;
         const list = Array.isArray(data) ? data : (data.data || []);
         setTrends(list);
       } catch (error) {
@@ -27,58 +28,67 @@ const TrendsPage = () => {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#f6f5f2] min-h-screen text-black">
       <Navbar />
       
-      <section className="relative h-[40vh] md:h-[50vh] flex items-center justify-center bg-primary overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-80">
+      {/* HERO */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop" 
             alt="Active Itineraries" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
         </div>
-        <div className="container mx-auto px-6 relative z-10 text-center">
+        
+        <div className="relative z-10 px-6 text-center max-w-5xl mx-auto">
           <Reveal>
-            <span className="text-accent text-[10px] uppercase tracking-[0.4em] font-semibold mb-6 block">
-              Trending Now
+            <span className="uppercase tracking-[0.6em] text-white/70 text-[11px] font-medium block mb-8">
+              Live updates from the field
             </span>
-            <h1 className="text-4xl md:text-8xl font-serif text-white mb-8">
-              Active <span className="italic text-accent">Itineraries</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1] tracking-tight uppercase">
+              Active <span className="italic">Itineraries</span>
             </h1>
+            <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mt-8 leading-relaxed font-light">
+              Explore our most recent curated experiences and limited-time itineraries, 
+              updated live by our travel experts.
+            </p>
           </Reveal>
         </div>
       </section>
 
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
-            <div className="max-w-xl">
-              <Reveal>
-                <h2 className="text-4xl font-serif text-slate-950 mb-6 hover:text-accent transition-colors duration-500 cursor-default">Latest Trends</h2>
-                <p className="text-primary/80 text-lg font-medium leading-relaxed">
-                  Explore our most recent curated experiences and limited-time itineraries, updated live by our travel experts.
-                </p>
-              </Reveal>
-            </div>
+      {/* Trends Listing */}
+      <section className="py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-20">
+            <Reveal>
+              <div>
+                <span className="uppercase tracking-[0.5em] text-black/35 text-[11px] font-semibold block mb-5">
+                  Latest Trends
+                </span>
+                <h2 className="text-4xl md:text-6xl font-serif leading-[1] tracking-tight uppercase">
+                  Experiences <span className="italic">Trending Now.</span>
+                </h2>
+              </div>
+            </Reveal>
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div>
+            <div className="flex items-center justify-center py-24">
+              <div className="w-12 h-12 border-2 border-black border-t-transparent rounded-full animate-spin" />
             </div>
           ) : trends.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {trends.map((trend, index) => (
                 <Reveal key={trend._id || trend.id} delay={index * 0.1}>
-                  <TourCard tour={trend} dark={false} />
+                  <TourCard tour={trend} />
                 </Reveal>
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-              <p className="text-primary/60 text-xl font-serif">No active itineraries at the moment. Check back soon!</p>
+            <div className="text-center py-24">
+              <p className="text-black/30 uppercase tracking-[0.4em] text-sm font-bold">No active itineraries found.</p>
             </div>
           )}
         </div>

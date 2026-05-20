@@ -1,9 +1,9 @@
 import React from 'react';
 import Logo from '../Logo';
 import {
-  LayoutDashboard, Table2, CreditCard, Plane, MessageSquare,
-  ShoppingBag, Users, MapPin, Star, BarChart3, Settings,
-  LogOut, Package, Clock, Compass, Activity, Route, TrendingUp
+  LayoutDashboard, MessageSquare, Compass, Package, ShoppingBag, 
+  LogOut, Share2, Briefcase, Calendar, HelpCircle, Headset, 
+  Handshake, FileText
 } from 'lucide-react';
 
 const groups = [
@@ -11,36 +11,27 @@ const groups = [
     label: 'Main',
     items: [
       { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-      { id: 'tables',    icon: Table2,          label: 'Tables'    },
-      { id: 'billing',   icon: CreditCard,      label: 'Billing'   },
+      { id: 'socials',   icon: Share2,          label: 'socials'   },
+      { id: 'messages',  icon: MessageSquare,   label: 'Messages'  },
+      { id: 'career',    icon: Briefcase,       label: 'Career'    },
     ],
   },
   {
     label: 'Travel',
     items: [
-      { id: 'tours',        icon: Compass,   label: 'Tours'        },
-      { id: 'flights',      icon: Plane,     label: 'Flights'      },
-      { id: 'packages',     icon: Package,   label: 'Packages'     },
-      { id: 'appointments', icon: Clock,     label: 'Appointments' },
-      { id: 'bookings',     icon: ShoppingBag, label: 'Bookings'   },
-      { id: 'itinerary',    icon: Route,     label: 'Itinerary'    },
+      { id: 'tours',        icon: Compass,     label: 'Tours'        },
+      { id: 'packages',     icon: Package,     label: 'Packages'     },
+      { id: 'calender',     icon: Calendar,    label: 'Calender'     },
+      { id: 'bookings',     icon: ShoppingBag, label: 'Bookings'     },
     ],
   },
   {
-    label: 'People',
+    label: 'Support & Finance',
     items: [
-      { id: 'customers', icon: Users,        label: 'Customers' },
-      { id: 'staff',     icon: Activity,     label: 'Staff'     },
-      { id: 'messages',  icon: MessageSquare,label: 'Messages'  },
-      { id: 'reviews',   icon: Star,         label: 'Reviews'   },
-    ],
-  },
-  {
-    label: 'Analytics',
-    items: [
-      { id: 'reports',  icon: BarChart3, label: 'Reports'  },
-      { id: 'trend',   icon: TrendingUp, label: 'Trend'   },
-      { id: 'settings', icon: Settings,  label: 'Settings' },
+      { id: 'faqs',      icon: HelpCircle, label: 'FAQs' },
+      { id: 'va',        icon: Headset,    label: 'virtual Assistance' },
+      { id: 'partners',  icon: Handshake,  label: 'partners' },
+      { id: 'invoice',   icon: FileText,   label: 'Invoice' },
     ],
   },
 ];
@@ -55,7 +46,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
         
           {/* Logo */}
           <div className="px-5 py-5 border-b border-white/10 flex items-center justify-center">
-          <Logo height={32} inverted />
+          <Logo height={110} width={350} inverted />
           </div>
 
         {/* Nav */}

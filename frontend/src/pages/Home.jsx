@@ -56,9 +56,9 @@ const Home = () => {
           <FeaturedTours />
         </Reveal>
         
-        <Reveal>
+        {/* <Reveal>
           <TestimonialsSection />
-        </Reveal>
+        </Reveal> */}
         
         <Reveal>
           <CSRSection />

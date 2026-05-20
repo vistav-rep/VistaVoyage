@@ -105,7 +105,7 @@ const AboutSection = () => {
           <Reveal delay={0.6}>
             <Link 
               to="/about"
-              className="inline-flex items-center gap-3 mt-4 bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-secondary transition"
+              className="inline-flex items-center gap-3 mt-4 bg-black text-white px-8 py-4 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-accent transition-all duration-500"
             >
               Discover More
               <ArrowRight className="w-4 h-4" />

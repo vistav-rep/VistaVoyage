@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout        from '../components/Admin/AdminLayout';
 import DashboardHome      from '../components/Admin/DashboardHome';
-import TablesView         from '../components/Admin/TablesView';
 import BillingView        from '../components/Admin/BillingView';
 import ToursManagement    from '../components/Admin/ToursManagement';
 import BookingsManagement from '../components/Admin/BookingsManagement';
-import CustomerManagement from '../components/Admin/CustomerManagement';
-import StaffActivity      from '../components/Admin/StaffActivity';
 import MessagesView       from '../components/Admin/MessagesView';
-import ReviewsView        from '../components/Admin/ReviewsView';
-import ReportsView        from '../components/Admin/ReportsView';
-import SettingsView       from '../components/Admin/SettingsView';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -23,21 +17,17 @@ const AdminDashboard = () => {
   const render = () => {
     switch (activeTab) {
       case 'dashboard':    return <DashboardHome />;
-      case 'tables':       return <TablesView />;
-      case 'billing':      return <BillingView />;
-      case 'tours':        return <ToursManagement />;
-      case 'flights':      return <BookingsManagement initialType="FLIGHT" />;
-      case 'packages':     return <BookingsManagement initialType="PACKAGE" />;
-      case 'appointments': return <BookingsManagement initialType="APPOINTMENT" />;
-      case 'bookings':     return <BookingsManagement initialType="ALL" />;
-      case 'itinerary':    return <BookingsManagement initialType="ALL" />;
-      case 'customers':    return <CustomerManagement />;
-      case 'staff':        return <StaffActivity />;
+      case 'socials':      return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Socials Management Coming Soon</div>;
       case 'messages':     return <MessagesView />;
-      case 'reviews':      return <ReviewsView />;
-      case 'reports':      return <ReportsView />;
-      case 'trend':        return <ReportsView />;
-      case 'settings':     return <SettingsView />;
+      case 'career':       return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Career Management Coming Soon</div>;
+      case 'tours':        return <ToursManagement />;
+      case 'packages':     return <BookingsManagement initialType="PACKAGE" />;
+      case 'calender':     return <BookingsManagement initialType="APPOINTMENT" />;
+      case 'bookings':     return <BookingsManagement initialType="ALL" />;
+      case 'faqs':         return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">FAQs Management Coming Soon</div>;
+      case 'va':           return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Virtual Assistance Management Coming Soon</div>;
+      case 'partners':     return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Partners Management Coming Soon</div>;
+      case 'invoice':      return <BillingView />;
       default:             return <DashboardHome />;
     }
   };

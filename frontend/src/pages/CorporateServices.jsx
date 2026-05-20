@@ -109,7 +109,7 @@ const CorporateServices = () => {
       <CSRSection />
 
       {/* Contact Section */}
-      <section className="py-32 bg-primary text-white text-center">
+      <section className="py-32 bg-white text-white text-center">
         <div className="container mx-auto px-6">
           <Reveal>
             <h2 className="text-4xl md:text-6xl font-serif mb-12">Elevate Your Corporate <br />Travel Standard</h2>

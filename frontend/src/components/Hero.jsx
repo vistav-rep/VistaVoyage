@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import Logo from './Logo';
+
 import skuVideo from '../assets/sku.mp4';
-import img1 from '../assets/y7.jpg';
+import postVideo from '../assets/post.mp4'; // NEW VIDEO
+
 import img2 from '../assets/p9.jpg';
 
 const slides = [
@@ -16,7 +17,7 @@ const slides = [
     description:
       'Elite travel logistics crafted for executives who demand seamless movement across continents.',
     path: '/corporate',
-    type: 'image',
+    type: 'video',
   },
   {
     id: 'leisure',
@@ -30,8 +31,6 @@ const slides = [
   },
 ];
 
-const images = [img1, img2];
-
 const Hero = ({ skipBrandIntro = false }) => {
   const [index, setIndex] = useState(0);
   const [intro, setIntro] = useState(!skipBrandIntro);
@@ -39,7 +38,9 @@ const Hero = ({ skipBrandIntro = false }) => {
 
   useEffect(() => {
     if (skipBrandIntro) return;
+
     const t = setTimeout(() => setIntro(false), 2500);
+
     return () => clearTimeout(t);
   }, [skipBrandIntro]);
 
@@ -48,40 +49,33 @@ const Hero = ({ skipBrandIntro = false }) => {
       const i = setInterval(() => {
         setIndex((p) => (p + 1) % slides.length);
       }, 7000);
+
       return () => clearInterval(i);
     }
   }, [intro]);
-
-  const current = slides[index];
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-black text-white">
 
       {/* ===== BACKGROUND ===== */}
       <AnimatePresence mode="wait">
-        {intro || current.type === 'video' ? (
-          <motion.video
-            key="video"
-            autoPlay
-            muted
-            loop
-            className="absolute inset-0 w-full h-full object-cover opacity-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <source src={skuVideo} type="video/mp4" />
-          </motion.video>
-        ) : (
-          <motion.img
-            key="img"
-            src={images[index % images.length]}
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
-            initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ opacity: 0 }}
+        <motion.video
+          key={index}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* First slide uses POST video */}
+          <source
+            src={index === 0 ? postVideo : skuVideo}
+            type="video/mp4"
           />
-        )}
+        </motion.video>
       </AnimatePresence>
 
       {/* Overlay */}
@@ -97,14 +91,11 @@ const Hero = ({ skipBrandIntro = false }) => {
             exit={{ opacity: 0 }}
           >
             <div>
-              <div className="flex justify-center mb-6">
-                <Logo height={64} inverted />
-              </div>
               <h1 className="text-6xl md:text-9xl font-serif">
-                 Beyond
-                 <span className="italic text-accent"> Ordinary</span>
-               </h1>
-             </div>
+                Beyond
+                <span className="italic text-accent"> Ordinary</span>
+              </h1>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -115,13 +106,9 @@ const Hero = ({ skipBrandIntro = false }) => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
             className="max-w-5xl"
           >
-               <div className="flex justify-center mb-8 overflow-hidden h-20 md:h-28 items-center">
-                 <Logo height={120} inverted />
-               </div>
-            
             <p className="text-accent tracking-[0.6em] text-xs md:text-sm mb-12 uppercase font-bold">
               Hallmark of Luxury Travel
             </p>
@@ -129,29 +116,48 @@ const Hero = ({ skipBrandIntro = false }) => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-12">
               {index === 0 && (
                 <motion.button
-                  whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: '#c8a248',
+                    color: '#fff',
+                  }}
                   onClick={() => navigate('/corporate')}
                   className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
                 >
                   Corporate Travels
                 </motion.button>
               )}
+
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: '#c8a248',
+                  color: '#fff',
+                }}
                 onClick={() => navigate('/tours')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >
                 Our Experiences
               </motion.button>
+
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: '#c8a248',
+                  color: '#fff',
+                }}
                 onClick={() => navigate('/appointments')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >
                 Plan Your Journey
               </motion.button>
+
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#c8a248', color: '#fff' }}
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: '#c8a248',
+                  color: '#fff',
+                }}
                 onClick={() => navigate('/blogs')}
                 className="px-10 py-4 border border-white/30 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all backdrop-blur-sm bg-white/5"
               >

@@ -25,7 +25,7 @@ const Loader = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="mb-8 flex items-center justify-center"
           >
-            <Logo height={56} inverted />
+            <Logo height={110} width={350} inverted />
           </motion.div>
 
         {/* Animated Line */}
