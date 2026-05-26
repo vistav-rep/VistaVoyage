@@ -16,15 +16,16 @@ const ToursPage = () => {
       try {
         const response = await api.get('/tours');
         const dbTours = response.data;
-
+        
+        // Combine static and dynamic tours, avoiding duplicates by title if necessary
+        // or just append them
         const combined = [...dbTours, ...staticTours];
-
-        const unique = combined.filter(
-          (tour, index, self) =>
-            index ===
-            self.findIndex(
-              (t) => (t._id || t.id) === (tour._id || tour.id)
-            )
+        
+        // Remove duplicates based on ID or title
+        const unique = combined.filter((tour, index, self) =>
+          index === self.findIndex((t) => (
+            (t._id || t.id) === (tour._id || tour.id)
+          ))
         );
 
         setTours(unique);
@@ -40,106 +41,77 @@ const ToursPage = () => {
   }, []);
 
   return (
-    <div className="bg-[#f6f5f2] text-black overflow-hidden">
+    <div className="bg-white">
       <Navbar />
-
-      {/* HERO */}
-      <section className="relative h-[72vh] md:h-[82vh] flex items-center justify-center">
-        {/* Background */}
-        <motion.div
-          initial={{ scale: 1.08, opacity: 0 }}
+      
+      {/* MINIMALIST LUXE HERO */}
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <motion.div 
+          initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.6, ease: 'easeOut' }}
-          className="absolute inset-0"
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="absolute inset-0 z-0"
         >
-          <img
-            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
-            alt="Luxury Travel"
-            className="w-full h-full object-cover"
+          <img 
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop" 
+            alt="VistaVoyage Bespoke Collection" 
+            className="w-full h-full object-cover opacity-20"
           />
-
-          <div className="absolute inset-0 bg-black/35" />
-
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-[#f6f5f2]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/50 to-white"></div>
         </motion.div>
-
-        {/* Content */}
-        <div className="relative z-10 px-6 text-center max-w-6xl mx-auto">
+        
+        <div className="container mx-auto px-6 relative z-10 text-center">
           <Reveal>
-            <span className="uppercase tracking-[0.6em] text-white/70 text-[11px] md:text-xs font-medium block mb-8">
-              Bespoke Luxury Travel
+            <span className="text-accent text-[11px] md:text-[13px] uppercase tracking-[0.8em] font-bold mb-10 block">
+              The VistaVoyage Legacy
             </span>
-
-            <h1 className="text-white font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight max-w-5xl mx-auto">
-              Extraordinary journeys shaped with elegance.
-            </h1>
-
-            <p className="text-white/75 text-base md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-              Discover a refined collection of immersive escapes,
-              private expeditions, and unforgettable experiences
-              crafted for discerning travelers.
-            </p>
-
-            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-12 text-white/50 uppercase text-[10px] tracking-[0.35em]">
-              <span>Private Experiences</span>
-
-              <div className="hidden md:block w-1 h-1 rounded-full bg-white/30" />
-
-              <span>Luxury Retreats</span>
-
-              <div className="hidden md:block w-1 h-1 rounded-full bg-white/30" />
-
-              <span>Global Destinations</span>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-primary/40 text-[10px] uppercase tracking-[0.4em] font-bold">
+              <span>Private Safaris</span>
+              <div className="w-1.5 h-1.5 bg-accent/30 rounded-full hidden md:block"></div>
+              <span>Global Mobility</span>
+              <div className="w-1.5 h-1.5 bg-accent/30 rounded-full hidden md:block"></div>
+              <span>Eco-Luxury</span>
             </div>
           </Reveal>
         </div>
 
-        {/* Scroll Line */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-40">
-          <div className="w-px h-16 bg-gradient-to-b from-white to-transparent" />
+        {/* SCROLL INDICATOR */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-20">
+          <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent"></div>
         </div>
       </section>
 
-      {/* COLLECTION */}
-      <section className="relative pt-20 md:pt-28 pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Section Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-16 md:mb-20">
+      {/* HOLIDAY COLLECTIONS - PURE & MINIMAL */}
+      <section className="py-32 relative z-10 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col items-center text-center mb-40">
             <Reveal>
-              <div>
-                <span className="uppercase tracking-[0.5em] text-black/35 text-[11px] font-semibold block mb-5">
-                  The Collection
-                </span>
-
-                <h2 className="text-4xl md:text-6xl font-serif leading-[1] tracking-tight max-w-2xl">
-                  Curated escapes for modern luxury travelers.
-                </h2>
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <p className="text-black/50 text-lg leading-relaxed max-w-xl">
-                Every journey is intentionally designed to blend
-                refined comfort, authentic discovery, and exceptional
-                hospitality across the world’s most captivating
-                destinations.
+              <h2 className="text-5xl md:text-7xl font-serif text-primary mb-12 tracking-tight">
+                Curated <span className="italic text-accent font-normal">Expeditions</span>
+              </h2>
+              <div className="w-20 h-px bg-accent/30 mb-12 mx-auto"></div>
+              <p className="text-primary/50 text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed">
+                A definitive selection of global journeys, engineered with absolute 
+                precision and a deep respect for the art of discovery.
               </p>
             </Reveal>
           </div>
 
-          {/* Loading */}
           {loading ? (
-            <div className="flex items-center justify-center py-24">
-              <div className="w-12 h-12 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center justify-center py-20">
+              <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
-              {tours.map((tour, index) => (
-                <Reveal
-                  key={tour._id || tour.id}
-                  delay={index * 0.06}
-                >
-                  <TourCard tour={tour} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-32">
+              {tours.map((pkg, index) => (
+                <Reveal key={pkg._id || pkg.id} delay={index * 0.1}>
+                  <div className="group relative">
+                    {/* Subtle index number for each card */}
+                    <span className="absolute -top-10 left-0 text-[80px] font-serif italic text-primary/5 pointer-events-none group-hover:text-accent/10 transition-colors duration-700">
+                      {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                    </span>
+                    <TourCard tour={pkg} dark={false} />
+                  </div>
                 </Reveal>
               ))}
             </div>
@@ -147,66 +119,12 @@ const ToursPage = () => {
         </div>
       </section>
 
-      {/* EXPERIENCE STRIP */}
-      <section className="border-y border-black/5 bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-14 md:py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-            {[
-              ['Private', 'Tailored Experiences'],
-              ['Global', 'Elite Destinations'],
-              ['24/7', 'Concierge Service'],
-              ['Luxury', 'Premium Hospitality'],
-            ].map((item, idx) => (
-              <div key={idx}>
-                <h3 className="text-3xl md:text-4xl font-serif tracking-tight mb-3">
-                  {item[0]}
-                </h3>
-
-                <p className="text-black/45 uppercase tracking-[0.2em] text-[11px]">
-                  {item[1]}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 md:py-32 bg-[#f1efea]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      {/* REFINED CTA */}
+      <section className="py-40 bg-surface/50 border-t border-primary/5">
+        <div className="container mx-auto px-6 text-center">
           <Reveal>
-            <span className="uppercase tracking-[0.5em] text-black/35 text-[11px] font-semibold block mb-6">
-              Begin Your Journey
-            </span>
-
-            <h3 className="text-4xl md:text-6xl font-serif leading-[1.05] tracking-tight mb-8">
-              Travel beyond expectations.
-            </h3>
-
-            <p className="text-black/50 text-lg leading-relaxed max-w-2xl mx-auto mb-12">
-              Let us craft a seamless luxury experience designed
-              exclusively around your vision of exploration.
-            </p>
-
-            <button
-              className="
-                bg-black
-                text-white
-                px-10
-                md:px-14
-                py-4
-                md:py-5
-                rounded-full
-                uppercase
-                tracking-[0.3em]
-                text-[11px]
-                font-semibold
-                hover:scale-[1.03]
-                hover:shadow-2xl
-                transition-all
-                duration-500
-              "
-            >
+            <h3 className="text-4xl md:text-6xl font-serif text-primary mb-12">Experience the Unimagined</h3>
+            <button className="px-16 py-6 bg-primary text-white rounded-full text-[11px] uppercase tracking-[0.4em] font-bold hover:bg-accent transition-all duration-700 shadow-xl">
               Inquire Privately
             </button>
           </Reveal>
