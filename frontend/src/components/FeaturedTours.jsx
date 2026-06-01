@@ -151,8 +151,9 @@ const FeaturedTours = () => {
                       />
                     );
                   })()}
+                </div>
 
-              <div className="group relative">
+                <div className="group relative">
 
                 {/* OUTER GLOW */}
                 <div className="absolute inset-0 rounded-[40px] bg-[#c8a248]/0 group-hover:bg-[#c8a248]/10 blur-3xl transition-all duration-700" />
