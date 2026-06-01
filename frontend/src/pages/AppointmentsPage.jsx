@@ -87,7 +87,7 @@ const AppointmentsPage = () => {
                   Expert Guidance for Your <span className="italic">Next Journey</span>
                 </h2>
                 <p className="text-primary/70 text-lg font-medium leading-relaxed mb-12">
-                  Our luxury travel consultants are available for in-person consultations at our Nairobi office. We provide expert advice, itinerary customization, and comprehensive planning for both corporate and leisure travel.
+                  Our luxury travel consultants are available for both in-person & online at our Nairobi office. We provide expert advice, itinerary customization, and comprehensive planning for both corporate and leisure travel.
                 </p>
                 
                 <div className="space-y-10 mb-16">
@@ -97,7 +97,7 @@ const AppointmentsPage = () => {
                     </div>
                     <div>
                       <h4 className="text-lg font-serif mb-2 text-primary">Location</h4>
-                      <p className="text-primary/60 text-sm font-medium">Applewood Adams, Ngong Rd, Nairobi. 9th floor, office 904A.</p>
+                      <p className="text-primary/60 text-sm font-medium">Applewood Adams, Ngong Rd, Nairobi. 9th floor, office 904B.</p>
                     </div>
                   </div>
                   <div className="flex gap-6">
@@ -111,11 +111,17 @@ const AppointmentsPage = () => {
                     </div>
                   </div>
                   <div className="flex gap-6 text-accent p-8 bg-accent/5 rounded-3xl border border-accent/10 hover:border-dark-red transition-all duration-500">
-                    <CheckCircle size={24} strokeWidth={1.5} className="shrink-0" />
-                    <p className="text-sm font-bold leading-relaxed">
-                      IMPORTANT NOTE: All our Office Consultation cost a Non-refundable but redeemable fee of $50 discounted to $35 for a limited time!
-                    </p>
-                  </div>
+                  <CheckCircle size={24} strokeWidth={1.5} className="shrink-0" />
+                  <p className="text-sm font-bold leading-relaxed">
+                    IMPORTANT NOTE: All our Office Consultation cost a Non-refundable but redeemable fee of KSH 50 discounted to KSH 35 for a limited time!
+                    
+                    <br />
+
+                    <span className="text-[#004B49]">
+                      24-Hour Round-the-Clock Services Available at an Additional Cost.
+                    </span>
+                  </p>
+                </div>
                 </div>
               </Reveal>
             </div>

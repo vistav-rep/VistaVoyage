@@ -3,7 +3,7 @@ import Logo from '../Logo';
 import {
   LayoutDashboard, MessageSquare, Compass, Package, ShoppingBag, 
   LogOut, Share2, Briefcase, Calendar, HelpCircle, Headset, 
-  Handshake, FileText
+  Handshake, FileText, FileSpreadsheet
 } from 'lucide-react';
 
 const groups = [
@@ -19,10 +19,10 @@ const groups = [
   {
     label: 'Travel',
     items: [
-      { id: 'tours',        icon: Compass,     label: 'Tours'        },
-      { id: 'packages',     icon: Package,     label: 'Packages'     },
-      { id: 'calender',     icon: Calendar,    label: 'Calender'     },
-      { id: 'bookings',     icon: ShoppingBag, label: 'Bookings'     },
+      { id: 'packages',     icon: Package,          label: 'Packages'     },
+      { id: 'import',       icon: FileSpreadsheet,  label: 'Import Excel' },
+      { id: 'calender',     icon: Calendar,         label: 'Calendar'     },
+      { id: 'bookings',     icon: ShoppingBag,      label: 'Bookings'     },
     ],
   },
   {
@@ -42,7 +42,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   return (
     <aside className="fixed inset-y-0 left-0 w-72 z-50 hidden lg:flex flex-col p-3">
       <div className="flex-1 flex flex-col rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl"
-        style={{ background: 'linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%)' }}>
+        style={{ background: 'linear-gradient(180deg, #0b3d2e 0%, #072a1f 100%)' }}>
         
           {/* Logo */}
           <div className="px-5 py-5 border-b border-white/10 flex items-center justify-center">
@@ -62,14 +62,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                   return (
                     <button key={item.id} onClick={() => go(item.id)}
                       className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all duration-300 group relative overflow-hidden ${
-                        active ? 'bg-gradient-to-r from-violet-500/20 to-indigo-500/20' : 'hover:bg-white/5'
+                        active ? 'bg-accent/15' : 'hover:bg-white/5'
                       }`}>
                       {active && (
-                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-violet-500 to-indigo-500 rounded-r-full" />
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-accent rounded-r-full" />
                       )}
                       <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                         active
-                          ? 'bg-gradient-to-br from-violet-500 to-indigo-600 text-white shadow-lg shadow-violet-500/30'
+                          ? 'bg-accent text-primary shadow-lg shadow-accent/30'
                           : 'bg-white/5 text-white/40 group-hover:bg-white/10 group-hover:text-white/70'
                       }`}>
                         <item.icon size={16} />
@@ -96,9 +96,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           </button>
 
           {/* User card */}
-          <div className="mt-4 rounded-2xl p-4 bg-gradient-to-br from-violet-500/10 to-indigo-500/10 border border-white/5">
+          <div className="mt-4 rounded-2xl p-4 bg-accent/10 border border-accent/20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+              <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-primary font-bold">
                 A
               </div>
               <div className="flex-1 min-w-0">

@@ -171,7 +171,7 @@ const TablesView = () => {
                     }`}>{b.type === 'FLIGHT' ? 'Flight' : b.type === 'APPOINTMENT' ? 'Consult' : 'Package'}</span>
                   </td>
                   <td className="px-5 py-4 text-xs text-white/50">{b.fromDate ? new Date(b.fromDate).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : 'TBA'}</td>
-                  <td className="px-5 py-4 text-xs font-semibold text-white">${(b.totalPrice || 0).toLocaleString()}</td>
+                  <td className="px-5 py-4 text-xs font-semibold text-white">KSH {(b.totalPrice || 0).toLocaleString()}</td>
                   <td className="px-5 py-4">
                     <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
                       b.workflowStatus === 'CONFIRMED' ? 'bg-emerald-500/20 text-emerald-400' :

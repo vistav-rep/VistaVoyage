@@ -5,6 +5,7 @@ import BillingView        from '../components/Admin/BillingView';
 import ToursManagement    from '../components/Admin/ToursManagement';
 import BookingsManagement from '../components/Admin/BookingsManagement';
 import MessagesView       from '../components/Admin/MessagesView';
+import PackagesImport     from '../components/Admin/PackagesImport';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -20,8 +21,8 @@ const AdminDashboard = () => {
       case 'socials':      return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Socials Management Coming Soon</div>;
       case 'messages':     return <MessagesView />;
       case 'career':       return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">Career Management Coming Soon</div>;
-      case 'tours':        return <ToursManagement />;
-      case 'packages':     return <BookingsManagement initialType="PACKAGE" />;
+      case 'packages':     return <ToursManagement />;
+      case 'import':       return <PackagesImport onImportDone={() => {}} />;
       case 'calender':     return <BookingsManagement initialType="APPOINTMENT" />;
       case 'bookings':     return <BookingsManagement initialType="ALL" />;
       case 'faqs':         return <div className="p-10 text-white/50 uppercase tracking-widest text-xs">FAQs Management Coming Soon</div>;

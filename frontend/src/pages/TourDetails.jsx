@@ -211,7 +211,7 @@ const TourDetails = () => {
                 </div>
                 <div className="bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20">
                   <span className="text-white/60 text-xs uppercase tracking-widest block mb-1">Starting from</span>
-                  <span className="text-3xl font-serif text-white">${tour.price}</span>
+                  <span className="text-3xl font-serif text-white">KSH {tour.price?.toLocaleString()}</span>
                 </div>
               </div>
             </Reveal>
@@ -438,7 +438,7 @@ const TourDetails = () => {
                         
                         <div className="space-y-6">
                           <div className="relative group">
-                            <label className="text-[10px] uppercase tracking-widest font-bold text-primary/40 group-focus-within:text-accent transition-colors mb-2 block">Full Name</label>
+                            <label className="text-[10px] uppercase tracking-widest font-bold text-primary/60 group-focus-within:text-accent transition-colors mb-2 block">Full Name</label>
                             <input 
                               type="text" 
                               required
@@ -600,7 +600,7 @@ const TourDetails = () => {
                           <div className="flex justify-between items-end mb-8 px-2">
                             <span className="text-[10px] uppercase tracking-widest font-bold text-primary/60">Total Estimated</span>
                             <span className="text-4xl font-serif text-primary">
-                              ${totalPrice}
+                              KSH {(totalPrice || 0).toLocaleString()}
                             </span>
                           </div>
                           <button 

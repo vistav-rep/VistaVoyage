@@ -272,7 +272,7 @@ const BookingsManagement = ({ initialType = 'ALL' }) => {
                     {booking.fromDate ? new Date(booking.fromDate).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : 'TBA'}
                   </td>
                   <td className="px-6 py-4 text-sm font-bold text-white">
-                    ${(booking.totalPrice || 0).toLocaleString()}
+                    KSH {(booking.totalPrice || 0).toLocaleString()}
                   </td>
                   <td className="px-8 py-6">
                     <div>

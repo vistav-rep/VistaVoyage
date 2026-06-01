@@ -68,11 +68,11 @@ const PartnersSection = () => {
         url: "https://tosk.or.ke",
       },
 
-      {
-        name: "KATO",
-        logo: katoLogo,
-        url: "https://katokenya.org",
-      },
+      // {
+      //   name: "KATO",
+      //   logo: katoLogo,
+      //   url: "https://katokenya.org",
+      // },
 
       {
         name: "Sarova",

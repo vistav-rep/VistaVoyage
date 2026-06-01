@@ -47,8 +47,8 @@ const ReportsView = () => {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {[
-          { label: 'Gross Revenue', value: `$${(stats?.totalRevenue || 53000).toLocaleString()}`, change: '+14.2%', icon: DollarSign, color: 'from-emerald-500 to-teal-600', textColor: 'text-emerald-400' },
-          { label: 'Average Booking', value: `$${Math.round((stats?.totalRevenue || 53000) / (stats?.totalBookings || 1)).toLocaleString()}`, change: '+5.7%', icon: TrendingUp, color: 'from-cyan-500 to-blue-600', textColor: 'text-cyan-400' },
+          { label: 'Gross Revenue', value: `KSH ${(stats?.totalRevenue || 53000).toLocaleString()}`, change: '+14.2%', icon: DollarSign, color: 'from-emerald-500 to-teal-600', textColor: 'text-emerald-400' },
+          { label: 'Average Booking', value: `KSH ${Math.round((stats?.totalRevenue || 53000) / (stats?.totalBookings || 1)).toLocaleString()}`, change: '+5.7%', icon: TrendingUp, color: 'from-cyan-500 to-blue-600', textColor: 'text-cyan-400' },
           { label: 'Conversion Rate', value: '3.4%', change: '-0.8%', icon: Activity, color: 'from-amber-500 to-orange-600', textColor: 'text-amber-400' },
         ].map((kpi, i) => (
           <div key={i} className="rounded-3xl border border-white/5 p-6" style={{ background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)' }}>
