@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Settings, Shield, Bell, Globe, Mail, 
+  Settings, Bell, Globe, Mail, 
   Lock, Save, Database, Server, User, Key
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -11,7 +11,6 @@ const SettingsView = () => {
   const sections = [
     { id: 'profile', label: 'Executive Profile', icon: User },
     { id: 'company', label: 'Company Details', icon: Database },
-    { id: 'security', label: 'Security & Access', icon: Shield },
     { id: 'payments', label: 'Payment Methods', icon: Lock },
     { id: 'notifications', label: 'Communications', icon: Bell },
     { id: 'permissions', label: 'User Permissions', icon: Key },
@@ -87,66 +86,6 @@ const SettingsView = () => {
                   <Save size={16} />
                   Save Changes
                 </button>
-              </div>
-            </div>
-          )}
-
-          {activeSection === 'security' && (
-            <div className="p-8 space-y-8">
-              <div>
-                <h3 className="text-xl font-bold text-white mb-6">Security & Access</h3>
-                <div className="space-y-4">
-                  <div className="p-6 rounded-2xl border border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                        <Lock size={20} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-white">Two-Factor Authentication</p>
-                        <p className="text-xs text-white/40 mt-1">Recommended for high-level access</p>
-                      </div>
-                    </div>
-                    <div className="w-12 h-6 bg-emerald-500 rounded-full flex items-center justify-end p-1">
-                      <div className="w-4 h-4 bg-white rounded-full shadow-sm" />
-                    </div>
-                  </div>
-                  
-                  <div className="p-6 rounded-2xl border border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-violet-500/20 flex items-center justify-center text-violet-400">
-                        <Key size={20} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-white">API Access Token</p>
-                        <p className="text-xs text-white/40 mt-1">Active: VST-X94-K92-P10</p>
-                      </div>
-                    </div>
-                    <button className="text-sm font-medium text-violet-400 hover:text-violet-300">Rotate Key</button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t border-white/5">
-                <h4 className="text-sm font-medium text-white/60 mb-4 px-1">Active Sessions</h4>
-                <div className="space-y-3">
-                  {[
-                    { os: 'macOS Sonoma', browser: 'Safari 17.1', location: 'Nairobi, Kenya', status: 'Current Session' },
-                    { os: 'Windows 11', browser: 'Chrome 122', location: 'London, UK', status: 'Last active 2h ago' },
-                  ].map((session, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-white/5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40">
-                          <Server size={18} />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-white">{session.os} • {session.browser}</p>
-                          <p className="text-xs text-white/40">{session.location}</p>
-                        </div>
-                      </div>
-                      <span className="text-xs font-medium text-emerald-400">{session.status}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           )}

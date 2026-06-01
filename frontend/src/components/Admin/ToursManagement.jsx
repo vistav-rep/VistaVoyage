@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import getImageUrl from '../../utils/imageUrl';
 import { listItemsFromResponse } from '../../utils/apiList';
 
 const EMPTY_FORM = {
@@ -146,7 +147,7 @@ const ToursManagement = () => {
             >
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={tour.image?.startsWith('http') ? tour.image : `${import.meta.env.VITE_API_URL?.split('/api')[0] || 'http://localhost:5000'}${tour.image}`} 
+                  src={getImageUrl(tour.image)}
                   alt={tour.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />

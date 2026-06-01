@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import { Building2, Globe, Mail, Phone, Briefcase, FileText, CheckCircle2, Loader2 } from 'lucide-react';
+import api from '../api/axios';
 
 const PartnerApplyPage = () => {
   const navigate = useNavigate();
@@ -53,18 +54,9 @@ const PartnerApplyPage = () => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/partners/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        window.scrollTo(0, 0);
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
+      await api.post('/partners/apply', formData);
+      setSubmitted(true);
+      window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('Failed to connect to server.');

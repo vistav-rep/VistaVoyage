@@ -7,7 +7,7 @@ import {
   Users, MessageSquare, History, Tag, CreditCard, Send, Plus
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../api/axios';
+import api, { API_ORIGIN } from '../../api/axios';
 import { listItemsFromResponse } from '../../utils/apiList';
 
 const BookingsManagement = ({ initialType = 'ALL' }) => {
@@ -40,7 +40,7 @@ const BookingsManagement = ({ initialType = 'ALL' }) => {
     fetchData();
 
     // Listen for real-time updates
-    const socketUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || API_ORIGIN;
     const socket = io(socketUrl);
     
     socket.on('newBooking', (booking) => {

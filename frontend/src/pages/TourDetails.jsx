@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
+import getImageUrl from '../utils/imageUrl';
 import { 
   Calendar, 
   Clock, 
@@ -46,18 +47,6 @@ const TourDetails = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setBookingData(prev => ({
-        ...prev,
-        name: parsedUser.name || '',
-        email: parsedUser.email || ''
-      }));
-    }
-  }, []);
 
   useEffect(() => {
     const fetchTour = async () => {
@@ -101,14 +90,6 @@ const TourDetails = () => {
     fetchPrice();
   }, [tour, bookingData.fromDate, bookingData.toDate, bookingData.adults, bookingData.children]);
 
-  const getImageUrl = (image) => {
-    if (!image) return 'https://images.unsplash.com/photo-1534067783941-51c9c23eccfd';
-    if (typeof image === 'string' && image.startsWith('/uploads')) {
-      const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'http://localhost:5000';
-      return `${baseUrl}${image}`;
-    }
-    return image;
-  };
 
   if (loadingTour) {
     return (

@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 
 import api from '../api/axios';
+import getImageUrl from '../utils/imageUrl';
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -243,7 +244,7 @@ const CheckoutPage = () => {
                     <div className="flex gap-4">
                       {tourData?.image && (
                         <img 
-                          src={tourData.image.startsWith('http') ? tourData.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${tourData.image}`} 
+                          src={getImageUrl(tourData.image)}
                           alt="" 
                           className="w-16 h-16 rounded-xl object-cover"
                         />

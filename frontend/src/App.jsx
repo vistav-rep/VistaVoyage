@@ -22,9 +22,7 @@ const GalleryPage = lazy(() => import('./pages/GalleryPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const AdminCRM = lazy(() => import('./pages/AdminCRM'));
-const LoginPage = lazy(() => import('./pages/LoginPage'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
-const StaffLogin = lazy(() => import('./pages/StaffLogin'));
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -66,9 +64,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/crm" element={<AdminCRM />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/staff/login" element={<StaffLogin />} />
         </Routes>
       </Suspense>
 

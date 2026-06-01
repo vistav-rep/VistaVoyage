@@ -18,23 +18,24 @@ const {
   sendBookingQuote
 } = require('../controllers/bookingController');
 
-const { protect, admin } = require('../middleware/authMiddleware');
+const { attachSystemUser } = require('../middleware/authMiddleware');
 
 console.log('🛡️ Admin router initialized');
 
-router.get('/stats', protect, admin, getStats);
-router.get('/tasks', protect, admin, getTasks);
-router.post('/tasks', protect, admin, createTask);
-router.patch('/tasks/:id', protect, admin, updateTaskStatus);
-router.get('/activity', protect, admin, getActivity);
-router.get('/staff', protect, admin, getStaff);
-router.post('/staff', protect, admin, addStaff);
-router.get('/customers', protect, admin, getCustomers);
+router.use(attachSystemUser);
 
-// Booking Management Actions
-router.post('/bookings/:id/assign', protect, admin, assignWorkers);
-router.patch('/bookings/:id/workflow', protect, admin, updateWorkflowStatus);
-router.post('/bookings/:id/notes', protect, admin, addInternalNote);
-router.post('/bookings/:id/quote', protect, admin, sendBookingQuote);
+router.get('/stats', getStats);
+router.get('/tasks', getTasks);
+router.post('/tasks', createTask);
+router.patch('/tasks/:id', updateTaskStatus);
+router.get('/activity', getActivity);
+router.get('/staff', getStaff);
+router.post('/staff', addStaff);
+router.get('/customers', getCustomers);
+
+router.post('/bookings/:id/assign', assignWorkers);
+router.patch('/bookings/:id/workflow', updateWorkflowStatus);
+router.post('/bookings/:id/notes', addInternalNote);
+router.post('/bookings/:id/quote', sendBookingQuote);
 
 module.exports = router;

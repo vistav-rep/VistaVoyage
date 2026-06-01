@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
 import { FileText, Image as ImageIcon, Tag, Send, Loader2, ArrowLeft } from 'lucide-react';
+import api from '../api/axios';
 
 const AddBlogPage = () => {
   const navigate = useNavigate();
@@ -38,18 +39,9 @@ const AddBlogPage = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/blogs/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(blogData)
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        window.scrollTo(0, 0);
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
+      await api.post('/blogs/submit', blogData);
+      setSubmitted(true);
+      window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error submitting blog:', error);
       alert('Failed to connect to server.');

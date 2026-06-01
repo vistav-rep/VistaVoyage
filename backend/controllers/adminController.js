@@ -104,10 +104,6 @@ exports.getTasks = async (req, res) => {
 exports.createTask = async (req, res) => {
   const { title, description, assignedTo, priority, deadline, bookingId } = req.body;
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'User context missing' });
-    }
-
     const task = await Task.create({
       title,
       description,
@@ -149,10 +145,6 @@ exports.createTask = async (req, res) => {
 // @route   PATCH /api/admin/dashboard/tasks/:id
 exports.updateTaskStatus = async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'User context missing' });
-    }
-
     const task = await Task.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },
@@ -223,10 +215,6 @@ exports.getStaff = async (req, res) => {
 exports.addStaff = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'User context missing' });
-    }
-
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });

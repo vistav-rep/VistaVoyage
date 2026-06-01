@@ -5,7 +5,7 @@ const {
   getAllTours, getFeaturedTours, getTourById,
   createTour, updateTour, deleteTour, bulkDelete, importTours
 } = require('../controllers/tourController');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { attachSystemUser } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -26,16 +26,18 @@ const importStorage = multer.diskStorage({
 });
 const uploadImport = multer({ storage: importStorage }).single('file');
 
+router.use(attachSystemUser);
+
 /* ── routes ── */
 router.get('/',          getAllTours);
 router.get('/featured',  getFeaturedTours);
-router.post('/import',   protect, admin, uploadImport, importTours);
-router.delete('/bulk',   protect, admin, bulkDelete);
+router.post('/import',   uploadImport, importTours);
+router.delete('/bulk',   bulkDelete);
 router.get('/:id',       getTourById);
 
-router.post('/',         protect, admin, uploadImages, createTour);
-router.put('/:id',       protect, admin, uploadImages, updateTour);
-router.patch('/:id',     protect, admin, uploadImages, updateTour);
-router.delete('/:id',    protect, admin, deleteTour);
+router.post('/',         uploadImages, createTour);
+router.put('/:id',       uploadImages, updateTour);
+router.patch('/:id',     uploadImages, updateTour);
+router.delete('/:id',    deleteTour);
 
 module.exports = router;

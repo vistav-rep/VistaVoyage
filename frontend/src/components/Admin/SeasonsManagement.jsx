@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
+import getImageUrl from '../../utils/imageUrl';
 
 const SeasonsManagement = () => {
   const [seasons, setSeasons] = useState([]);
@@ -192,7 +193,7 @@ const SeasonsManagement = () => {
             {season.image && (
               <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                 <img 
-                  src={season.image.startsWith('http') ? season.image : `http://localhost:5000${season.image}`} 
+                  src={getImageUrl(season.image)}
                   alt={season.name} 
                   className="w-full h-full object-cover" 
                 />
@@ -326,7 +327,7 @@ const SeasonsManagement = () => {
                                   <span className="text-[8px] font-bold text-accent px-2 truncate w-full text-center">{season.imageFile.name}</span>
                                 </div>
                               ) : (
-                                <img src={season.image.startsWith('http') ? season.image : `http://localhost:5000${season.image}`} className="w-full h-full object-cover opacity-50" />
+                                <img src={getImageUrl(season.image)} className="w-full h-full object-cover opacity-50" />
                               )}
                               <div className="absolute inset-0 flex items-center justify-center bg-white/40 opacity-0 group-hover/img:opacity-100 transition-opacity">
                                 <PlusCircle size={14} className="text-accent" />

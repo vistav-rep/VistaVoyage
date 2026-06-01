@@ -92,7 +92,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white/40 group-hover:bg-red-500/20 group-hover:text-red-400 transition-all">
               <LogOut size={16} />
             </div>
-            <span className="text-[13px] font-medium text-white/50 group-hover:text-red-400">Logout</span>
+            <span className="text-[13px] font-medium text-white/50 group-hover:text-red-400">Back to Site</span>
           </button>
 
           {/* User card */}

@@ -53,11 +53,17 @@ app.use((req, res, next) => {
   console.log(`📡 ${req.method} ${req.url}`);
   next();
 });
+const allowedOrigins = (process.env.CORS_ORIGINS ||
+  'http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,https://vista-voyage-seven.vercel.app')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173"],
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type"]
 }));
 app.use(compression());
 app.use(express.json());
@@ -79,8 +85,8 @@ app.get("/api/health", (req, res) => {
 });
 
 const adminRoutes = require("./routes/adminRoutes");
-const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blogRoutes");
+const packageRoutes = require("./routes/packageRoutes");
 const tourRoutes = require("./routes/tourRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
@@ -89,8 +95,8 @@ const seasonRoutes = require("./routes/seasonRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 
-app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/packages", packageRoutes);
 app.use("/api/tours", tourRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/appointments", appointmentRoutes);

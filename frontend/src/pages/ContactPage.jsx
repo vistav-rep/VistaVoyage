@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Reveal from '../components/Reveal';
@@ -18,18 +18,6 @@ const ContactPage = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setFormData(prev => ({
-        ...prev,
-        name: parsedUser.name || '',
-        email: parsedUser.email || ''
-      }));
-    }
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

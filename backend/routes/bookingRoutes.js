@@ -5,13 +5,14 @@ const {
   updateWorkflowStatus, 
   getQuotePrice
 } = require('../controllers/bookingController');
-const { protect } = require('../middleware/authMiddleware');
+const { attachSystemUser } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 router.get('/price', getQuotePrice);
 router.post('/', createBooking);
-router.get('/', protect, getBookings);
-router.patch('/:id/status', protect, updateWorkflowStatus);
+router.use(attachSystemUser);
+router.get('/', getBookings);
+router.patch('/:id/status', updateWorkflowStatus);
 
 module.exports = router;

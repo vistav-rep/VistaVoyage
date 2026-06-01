@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from './Sidebar';
 import RequestList from './RequestList';
 import { motion } from 'framer-motion';
-import api from '../../../api/axios';
+import api, { API_ORIGIN } from '../../../api/axios';
 import { io } from 'socket.io-client';
 import {
   listItemsFromResponse,
@@ -79,8 +79,7 @@ const SafariDesk = () => {
   }, [fetchBookings]);
 
   useEffect(() => {
-    const socketUrl =
-      import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || API_ORIGIN;
     const socket = io(socketUrl);
 
     socket.on('newBooking', fetchBookings);

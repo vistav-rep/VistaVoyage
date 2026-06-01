@@ -95,9 +95,6 @@ const sendBookingQuote = async (req, res) => {
 
   try {
     console.log(`🔨 Sending quote for booking: ${id}`);
-    if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
 
     const booking = await Booking.findById(id).populate('tour');
     if (!booking) return res.status(404).json({ message: 'Booking not found' });
@@ -414,9 +411,6 @@ const assignWorkers = async (req, res) => {
 
   try {
     console.log(`🔨 Assigning workers to booking: ${id}`, workerIds);
-    if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
 
     const booking = await Booking.findById(id);
     if (!booking) return res.status(404).json({ message: 'Booking not found' });
@@ -465,9 +459,6 @@ const updateWorkflowStatus = async (req, res) => {
 
   try {
     console.log(`🔨 Updating workflow for booking: ${id} to ${workflowStatus}`);
-    if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
 
     const booking = await Booking.findById(id);
     if (!booking) return res.status(404).json({ message: 'Booking not found' });

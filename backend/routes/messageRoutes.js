@@ -5,13 +5,14 @@ const {
   updateMessageStatus, 
   deleteMessage 
 } = require('../controllers/messageController');
-const { protect, admin } = require('../middleware/authMiddleware');
+const { attachSystemUser } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 router.post('/', createMessage);
-router.get('/', protect, admin, getAllMessages);
-router.patch('/:id/status', protect, admin, updateMessageStatus);
-router.delete('/:id', protect, admin, deleteMessage);
+router.use(attachSystemUser);
+router.get('/', getAllMessages);
+router.patch('/:id/status', updateMessageStatus);
+router.delete('/:id', deleteMessage);
 
 module.exports = router;

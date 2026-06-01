@@ -46,7 +46,7 @@ const PartnerDashboard = () => {
         <div className="p-6 border-t border-white/5">
           <button className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl hover:bg-red-500/10 text-red-400 transition-all group">
             <LogOut size={20} className="group-hover:translate-x-1 transition-transform" />
-            <span className="text-xs uppercase tracking-widest font-bold">Logout</span>
+            <span className="text-xs uppercase tracking-widest font-bold">Exit Portal</span>
           </button>
         </div>
       </div>
