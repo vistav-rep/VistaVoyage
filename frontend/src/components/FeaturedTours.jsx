@@ -164,7 +164,7 @@ const FeaturedTours = () => {
                       <button
                         onClick={() =>
                           navigate(
-                            `/tours/${tour.slug || tour._id}`
+                            `/travel/${tour._id || tour.id}`
                           )
                         }
                         className="min-w-[58px] h-[58px] rounded-full bg-white text-[#111] flex items-center justify-center shadow-xl transition-all duration-500 group-hover:bg-[#c8a248] group-hover:text-white"

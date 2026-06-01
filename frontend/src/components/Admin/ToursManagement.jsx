@@ -7,26 +7,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../api/axios';
 import { listItemsFromResponse } from '../../utils/apiList';
 
+const EMPTY_FORM = {
+  title: '', description: '', price: '', duration: '',
+  location: '', tag: '', image: null,
+  seasonalPrices: [], itinerary: [], inclusions: [], exclusions: []
+};
+
 const ToursManagement = () => {
   const [tours, setTours] = useState([]);
   const [seasons, setSeasons] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingTour, setEditingTour] = useState(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    price: '',
-    duration: '',
-    location: '',
-    tag: '',
-    image: null,
-    seasonalPrices: [], // [{ season: id, price: number }]
-    itinerary: [], // [{ day: number, title: string, description: string }]
-    inclusions: [],
-    exclusions: []
-  });
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   useEffect(() => {
     fetchTours();
@@ -55,11 +51,15 @@ const ToursManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSaving(true);
+    setFormError('');
     const data = new FormData();
     Object.keys(formData).forEach(key => {
       if (['seasonalPrices', 'itinerary', 'inclusions', 'exclusions'].includes(key)) {
         data.append(key, JSON.stringify(formData[key]));
-      } else if (formData[key] !== null) {
+      } else if (key === 'image' && formData[key]) {
+        data.append(key, formData[key]);
+      } else if (formData[key] !== null && key !== 'image') {
         data.append(key, formData[key]);
       }
     });
@@ -70,17 +70,15 @@ const ToursManagement = () => {
       } else {
         await api.post('/tours', data);
       }
-      
       setShowModal(false);
       setEditingTour(null);
-      setFormData({ 
-        title: '', description: '', price: '', duration: '', 
-        location: '', tag: '', image: null, seasonalPrices: [],
-        itinerary: [], inclusions: [], exclusions: []
-      });
+      setFormData(EMPTY_FORM);
       fetchTours();
     } catch (error) {
-      alert('Error saving tour');
+      const msg = error.response?.data?.message || error.response?.data?.error || error.message || 'Failed to save tour';
+      setFormError(msg);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -103,32 +101,29 @@ const ToursManagement = () => {
   if (loading) {
     return (
       <div className="h-[60vh] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 rounded-3xl border border-white/5 p-5" style={{ background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)' }}>
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 rounded-3xl border border-primary/10 bg-white shadow-sm p-5">
         <div className="relative flex-1 lg:max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-primary/30" size={16} />
           <input 
             type="text" 
             placeholder="Search experiences..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"
+            className="w-full bg-primary/5 border border-primary/10 rounded-xl py-2.5 pl-10 pr-4 text-sm text-primary placeholder:text-primary/30 focus:outline-none focus:border-accent/50"
           />
         </div>
         <button 
           onClick={() => {
             setEditingTour(null);
-            setFormData({ 
-              title: '', description: '', price: '', duration: '', 
-              location: '', tag: '', image: null, seasonalPrices: [],
-              itinerary: [], inclusions: [], exclusions: []
-            });
+            setFormData(EMPTY_FORM);
+            setFormError('');
             setShowModal(true);
           }}
           className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-3.5 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-accent/10 whitespace-nowrap"
@@ -170,6 +165,7 @@ const ToursManagement = () => {
                         inclusions: tour.inclusions || [],
                         exclusions: tour.exclusions || []
                       });
+                      setFormError('');
                       setShowModal(true);
                     }}
                     className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-slate-600 hover:text-accent transition-colors shadow-sm"
@@ -227,22 +223,22 @@ const ToursManagement = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative bg-white w-full max-w-2xl rounded-[2.5rem] shadow-luxury overflow-hidden"
+              className="relative bg-white w-full max-w-2xl rounded-[2.5rem] shadow-luxury flex flex-col max-h-[90vh]"
             >
-              <div className="p-8 border-b border-slate-50 bg-slate-50/50 flex justify-between items-center">
+              <div className="p-8 border-b border-gray-100 bg-primary flex justify-between items-center rounded-t-[2.5rem] flex-shrink-0">
                 <div>
-                  <h3 className="text-xl font-serif text-slate-900">{editingTour ? 'Refine Experience' : 'Launch Experience'}</h3>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">Configure global travel package details</p>
+                  <h3 className="text-xl font-serif text-white">{editingTour ? 'Edit Package' : 'Add New Package'}</h3>
+                  <p className="text-[10px] text-white/50 uppercase tracking-widest font-bold mt-1">Fill in the details below and save</p>
                 </div>
                 <button 
-                  onClick={() => setShowModal(false)}
-                  className="p-2 hover:bg-white rounded-full transition-colors text-slate-400 hover:text-rose-500"
+                  onClick={() => { setShowModal(false); setFormError(''); }}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/60 hover:text-white"
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-8 grid grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="p-8 grid grid-cols-2 gap-6 overflow-y-auto flex-1">
                 <div className="col-span-2 space-y-4">
                   <div className="relative">
                     <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-accent" size={16} />
@@ -493,11 +489,21 @@ const ToursManagement = () => {
                   </label>
                 </div>
 
+                {formError && (
+                  <div className="col-span-2 bg-red-50 border border-red-100 text-red-600 rounded-xl px-4 py-3 text-xs font-bold uppercase tracking-widest">
+                    ⚠ {formError}
+                  </div>
+                )}
                 <button 
                   type="submit"
-                  className="col-span-2 bg-accent hover:bg-accent-dark text-white py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-accent/20 mt-4"
+                  disabled={saving}
+                  className="col-span-2 bg-primary hover:bg-primary/90 disabled:opacity-60 text-white py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-primary/20 mt-2 flex items-center justify-center gap-3"
                 >
-                  {editingTour ? 'Apply Refinements' : 'Global Launch'}
+                  {saving ? (
+                    <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Saving...</>
+                  ) : (
+                    editingTour ? 'Save Changes' : 'Add Package'
+                  )}
                 </button>
               </form>
             </motion.div>

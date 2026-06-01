@@ -75,7 +75,7 @@ const Footer = () => {
     },
     {
       icon: Facebook,
-      href: "#",
+      href: "https://www.facebook.com/share/1C8M1KemRX/",
     },
     {
       icon: Youtube,

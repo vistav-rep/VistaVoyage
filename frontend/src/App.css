@@ -243,13 +243,3 @@ html {
 .custom-underline:hover::after {
   width: 100%;
 }
-@font-face {
-  font-family: 'VistaFont';
-  src: url('/fonts/YourFont.woff2') format('woff2');
-  font-weight: 300 700;
-  font-style: normal;
-}
-
-body {
-  font-family: 'VistaFont', sans-serif;
-}

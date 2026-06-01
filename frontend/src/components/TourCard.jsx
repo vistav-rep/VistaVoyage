@@ -6,8 +6,9 @@ const TourCard = ({ tour }) => {
   const navigate = useNavigate();
 
   const getImageUrl = (image) => {
-    if (!image)
+    if (!image) {
       return 'https://images.unsplash.com/photo-1534067783941-51c9c23eccfd';
+    }
 
     if (image.startsWith('/uploads')) {
       const baseUrl = import.meta.env.VITE_API_URL
@@ -20,26 +21,35 @@ const TourCard = ({ tour }) => {
     return image;
   };
 
-  const tourId = tour._id || tour.id;
+  const tourId = tour?._id || tour?.id;
+
+  if (!tourId) return null;
 
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       onClick={() => navigate(`/travel/${tourId}`)}
-      className="
-        group
-        cursor-pointer
-      "
+      className="group cursor-pointer h-full"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          navigate(`/travel/${tourId}`);
+        }
+      }}
     >
       <div
         className="
+          h-full
+          flex
+          flex-col
           overflow-hidden
           rounded-[32px]
           bg-white
-          border border-black/5
-          shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-          hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+          border border-[#D9C9A3]/30
+          shadow-[0_12px_40px_rgba(0,0,0,0.08)]
+          hover:shadow-[0_25px_70px_rgba(0,0,0,0.15)]
           transition-all
           duration-500
         "
@@ -52,82 +62,105 @@ const TourCard = ({ tour }) => {
             loading="lazy"
             decoding="async"
             whileHover={{ scale: 1.08 }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 0.8 }}
             className="w-full h-full object-cover"
           />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+          {/* Luxury overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+          {/* Discount Badge */}
+          {tour.discount && (
+            <div className="absolute top-4 left-4">
+              <span className="bg-dark-red text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg">
+                SAVE {tour.discount}%
+              </span>
+            </div>
+          )}
 
           {/* Price */}
-          <div className="absolute top-5 right-5">
-            <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full">
-              <span className="text-l font-bold text-accent">
-                ${tour.price}
+          <div className="absolute top-4 right-4">
+            <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
+              <span className="text-lg font-bold text-[#004B49]">
+                ${Number(tour.price || 0).toLocaleString()}
               </span>
             </div>
           </div>
 
           {/* Location */}
           <div className="absolute bottom-5 left-5">
-            <span className="text-white/90 text-l tracking-wide">
+            <span className="text-white text-sm tracking-[0.2em] uppercase font-medium">
               {tour.location}
             </span>
           </div>
         </div>
 
         {/* CONTENT */}
-        <div className="p-6">
-          {/* Duration */}
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs uppercase tracking-[0.25em] text-black/40">
-              {tour.duration}
-            </span>
+        <div className="flex flex-col flex-grow p-5 md:p-6">
+          {/* Duration + Rating */}
+          <div className="flex items-center justify-between mb-5">
+            <div className="bg-[#004B49]/10 px-4 py-2 rounded-full">
+              <span className="text-sm font-bold text-[#004B49]">
+                {tour.duration || 'Tour Package'}
+              </span>
+            </div>
 
-            <div className="flex gap-1">
+            <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
-                <div
+                <span
                   key={star}
-                  className="w-1.5 h-1.5 rounded-full bg-black/20"
-                />
+                  className={`text-sm ${
+                    star <= (tour.rating || 5)
+                      ? 'text-yellow-500'
+                      : 'text-gray-300'
+                  }`}
+                >
+                  ★
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Title */}
+          {/* TITLE (NOW ACCENT GOLD) */}
           <h3
             className="
-              text-2xl
+              text-xl
+              md:text-2xl
+              lg:text-3xl
               font-serif
-              text-black
+              text-accent
               leading-tight
-              mb-6
-              group-hover:text-accent
-              transition-colors
-              duration-500
+              mb-4
+              tracking-wide
             "
           >
             {tour.title}
           </h3>
 
+          {/* DESCRIPTION */}
+          <p className="text-accent/100 text-sm md:text-base leading-relaxed mb-6 flex-grow">
+            {tour.shortDescription ||
+              'Experience carefully curated journeys, breathtaking destinations, and luxury travel experiences tailored for unforgettable memories.'}
+          </p>
+
           {/* CTA */}
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-black/50">
+          <div className="flex items-center justify-between border-t border-black/5 pt-5">
+            <span className="text-sm font-semibold text-[#004B49] tracking-wide">
               Explore Journey
             </span>
 
             <div
               className="
-                w-10
-                h-10
+                w-12
+                h-12
                 rounded-full
-                bg-black
+                bg-[#004B49]
                 text-white
                 flex
                 items-center
                 justify-center
                 group-hover:translate-x-1
-                transition-transform
+                transition-all
                 duration-300
               "
             >

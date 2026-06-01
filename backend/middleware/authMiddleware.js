@@ -6,10 +6,8 @@ const protect = async (req, res, next) => {
 
   if (process.env.NODE_ENV === 'development' && process.env.BYPASS_AUTH === 'true') {
     const mockUser = await User.findOne({ role: 'ADMIN' }).select('-password');
-    if (mockUser) {
-      req.user = mockUser;
-      return next();
-    }
+    req.user = mockUser || { _id: 'bypass', role: 'ADMIN', name: 'Dev Admin' };
+    return next();
   }
 
   if (

@@ -14,20 +14,11 @@ const ToursPage = () => {
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await api.get('/tours');
-        const dbTours = response.data;
-
-        const combined = [...dbTours, ...staticTours];
-
-        const unique = combined.filter(
-          (tour, index, self) =>
-            index ===
-            self.findIndex(
-              (t) => (t._id || t.id) === (tour._id || tour.id)
-            )
-        );
-
-        setTours(unique);
+        const response = await api.get('/tours?limit=200');
+        const dbTours = response.data?.data || response.data || [];
+        const dbIds = new Set(dbTours.map(t => t._id));
+        const staticOnly = staticTours.filter(t => !dbIds.has(t._id) && !dbIds.has(t.id));
+        setTours([...dbTours, ...staticOnly]);
       } catch (error) {
         console.error('Error fetching tours:', error);
       } finally {
