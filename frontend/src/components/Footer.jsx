@@ -121,7 +121,7 @@ const Footer = () => {
           {/* FOOTER LINKS */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="text-[#d4af37] uppercase tracking-[0.32em] text-[11px] font-bold mb-7">
+              <h3 className="!text-[#d4af37] uppercase tracking-[0.32em] text-[11px] font-bold mb-7">
                 {section.title}
               </h3>
 
@@ -141,7 +141,7 @@ const Footer = () => {
 
           {/* NEWSLETTER */}
           <div>
-            <h3 className="text-[#d4af37] uppercase tracking-[0.32em] text-[11px] font-bold mb-7">
+            <h3 className="!text-[#d4af37] uppercase tracking-[0.32em] text-[11px] font-bold mb-7">
               Stay Inspired
             </h3>
 

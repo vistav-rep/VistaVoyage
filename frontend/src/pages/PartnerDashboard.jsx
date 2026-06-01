@@ -129,7 +129,7 @@ const PartnerDashboard = () => {
                     <div className="p-6">
                       <div className="flex justify-between items-start mb-2">
                         <h4 className="text-sm font-black text-primary">Luxury Suite Package</h4>
-                        <p className="text-xs font-black text-accent">$450</p>
+                        <p className="text-xs font-black text-accent">KSH 450</p>
                       </div>
                       <p className="text-[10px] text-gray-400 mb-6">Full Board • 2 Guests</p>
                       <div className="flex gap-2">

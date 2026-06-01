@@ -200,7 +200,7 @@ const ToursManagement = () => {
                   </div>
                   <div className="flex items-center justify-end gap-1">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">From</span>
-                    <span className="text-lg font-serif text-slate-900">${tour.price}</span>
+                    <span className="text-lg font-serif text-slate-900">KSH {tour.price}</span>
                   </div>
                 </div>
               </div>
@@ -264,7 +264,7 @@ const ToursManagement = () => {
                   <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-accent" size={16} />
                   <input 
                     type="number" 
-                    placeholder="Investment (USD)"
+                    placeholder="Investment (KSH)"
                     required
                     value={formData.price}
                     onChange={(e) => setFormData({...formData, price: e.target.value})}

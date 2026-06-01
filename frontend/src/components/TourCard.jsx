@@ -1,25 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import getImageUrl from '../utils/imageUrl';
 
 const TourCard = ({ tour }) => {
   const navigate = useNavigate();
-
-  const getImageUrl = (image) => {
-    if (!image) {
-      return 'https://images.unsplash.com/photo-1534067783941-51c9c23eccfd';
-    }
-
-    if (image.startsWith('/uploads')) {
-      const baseUrl = import.meta.env.VITE_API_URL
-        ? import.meta.env.VITE_API_URL.split('/api')[0]
-        : 'http://localhost:5000';
-
-      return `${baseUrl}${image}`;
-    }
-
-    return image;
-  };
 
   const tourId = tour?._id || tour?.id;
 
@@ -64,6 +49,7 @@ const TourCard = ({ tour }) => {
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.8 }}
             className="w-full h-full object-cover"
+            onError={(e) => { e.currentTarget.src = getImageUrl(null); }}
           />
 
           {/* Luxury overlay */}
@@ -82,7 +68,7 @@ const TourCard = ({ tour }) => {
           <div className="absolute top-4 right-4">
             <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
               <span className="text-lg font-bold text-[#004B49]">
-                ${Number(tour.price || 0).toLocaleString()}
+                KSH {Number(tour.price || 0).toLocaleString()}
               </span>
             </div>
           </div>

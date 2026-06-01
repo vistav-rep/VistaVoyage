@@ -247,7 +247,7 @@ const PackagesImport = ({ onImportDone }) => {
               {[
                 ['title',       '✓','Maasai Mara Safari','Unique package name'],
                 ['description', '✓','Experience the wild...','Full description'],
-                ['price',       '✓','1250','Number in USD'],
+                ['price',       '✓','1250','Number in KSH'],
                 ['duration',    '✓','3 Days 2 Nights','Text format'],
                 ['location',    '✓','Maasai Mara, Kenya','Destination'],
                 ['category',    '','Safari','Safari, City, Beach, etc.'],

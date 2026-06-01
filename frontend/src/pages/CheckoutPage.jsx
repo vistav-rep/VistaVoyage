@@ -275,7 +275,7 @@ const CheckoutPage = () => {
                     <div className="pt-6 border-t border-slate-50 space-y-4">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400 font-medium">Subtotal</span>
-                        <span className="text-primary font-bold">${bookingData.totalPrice.toLocaleString()}</span>
+                        <span className="text-primary font-bold">KSH {bookingData.totalPrice.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400 font-medium">Taxes & Fees</span>
@@ -283,7 +283,7 @@ const CheckoutPage = () => {
                       </div>
                       <div className="flex justify-between pt-4 border-t border-slate-900/5">
                         <span className="text-sm font-bold text-primary uppercase tracking-widest">Total Investment</span>
-                        <span className="text-2xl font-serif text-accent">${bookingData.totalPrice.toLocaleString()}</span>
+                        <span className="text-2xl font-serif text-accent">KSH {bookingData.totalPrice.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>

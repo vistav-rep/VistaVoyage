@@ -6,10 +6,13 @@ import Reveal from '../components/Reveal';
 import { tours as staticTours } from '../data/toursData';
 import { motion } from 'framer-motion';
 import api from '../api/axios';
+import { useSearchParams } from 'react-router-dom';
 
 const ToursPage = () => {
   const [tours, setTours] = useState(staticTours);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -29,6 +32,22 @@ const ToursPage = () => {
     fetchTours();
     window.scrollTo(0, 0);
   }, []);
+
+  // Initialize search query from URL param on mount
+  useEffect(() => {
+    const initial = searchParams.get('search') || '';
+    if (initial) setSearchQuery(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync searchQuery -> URL with debounce
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (searchQuery && searchQuery.trim()) setSearchParams({ search: searchQuery.trim() });
+      else setSearchParams({});
+    }, 350);
+    return () => clearTimeout(t);
+  }, [searchQuery, setSearchParams]);
 
   return (
     <div className="bg-[#f6f5f2] text-black overflow-hidden">
@@ -118,22 +137,58 @@ const ToursPage = () => {
             </Reveal>
           </div>
 
+          {/* Search input */}
+          <div className="mb-8">
+            <label className="sr-only" htmlFor="tours-search">Search tours</label>
+            <div className="max-w-3xl">
+              <input
+                id="tours-search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { if (searchQuery && searchQuery.trim()) setSearchParams({ search: searchQuery.trim() }); else setSearchParams({}); } }}
+                placeholder="Search by title or location"
+                className="w-full md:w-1/2 h-12 px-4 rounded-xl border border-black/10 focus:outline-none focus:ring-2 focus:ring-[#c8a248]"
+              />
+            </div>
+          </div>
+
           {/* Loading */}
           {loading ? (
             <div className="flex items-center justify-center py-24">
               <div className="w-12 h-12 border-2 border-black border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
-              {tours.map((tour, index) => (
-                <Reveal
-                  key={tour._id || tour.id}
-                  delay={index * 0.06}
-                >
-                  <TourCard tour={tour} />
-                </Reveal>
-              ))}
-            </div>
+            (() => {
+              const q = searchQuery.trim().toLowerCase();
+              const filtered = q
+                ? tours.filter(t => (
+                  (t.title || '').toString().toLowerCase().includes(q) ||
+                  (t.location || '').toString().toLowerCase().includes(q) ||
+                  (t.description || '').toString().toLowerCase().includes(q)
+                ))
+                : tours;
+
+              if (filtered.length === 0) {
+                return (
+                  <div className="py-20 text-center text-black/60">
+                    No tours found for "{searchQuery}".
+                  </div>
+                );
+              }
+
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
+                  {filtered.map((tour, index) => (
+                    <Reveal
+                      key={tour._id || tour.id}
+                      delay={index * 0.06}
+                    >
+                      <TourCard tour={tour} />
+                    </Reveal>
+                  ))}
+                </div>
+              );
+            })()
           )}
         </div>
       </section>

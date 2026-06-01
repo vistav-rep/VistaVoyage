@@ -22,7 +22,7 @@ const BillingView = () => {
   const transactions = bookings.slice(0, 8).map(b => ({
     name: b.guestName || 'Guest',
     date: b.updatedAt ? new Date(b.updatedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }) : '—',
-    amount: b.paymentStatus === 'PAID' ? `+ $${(b.totalPrice||0).toLocaleString()}` : b.paymentStatus === 'PARTIALLY_PAID' ? `~ $${(b.totalPrice||0).toLocaleString()}` : `Pending`,
+    amount: b.paymentStatus === 'PAID' ? `+ KSH ${(b.totalPrice||0).toLocaleString()}` : b.paymentStatus === 'PARTIALLY_PAID' ? `~ KSH ${(b.totalPrice||0).toLocaleString()}` : `Pending`,
     color: b.paymentStatus === 'PAID' ? 'text-emerald-400' : b.paymentStatus === 'PARTIALLY_PAID' ? 'text-amber-400' : 'text-white/40',
     icon: b.paymentStatus === 'PAID' ? ArrowUpRight : b.paymentStatus === 'PARTIALLY_PAID' ? ArrowUpRight : Clock,
   }));
@@ -49,7 +49,7 @@ const BillingView = () => {
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: 'Total Revenue', value: `$${totalRevenue.toLocaleString()}`, sub: `${paid.length} paid bookings`, gradient: 'from-violet-500 to-indigo-600' },
+          { label: 'Total Revenue', value: `KSH ${totalRevenue.toLocaleString()}`, sub: `${paid.length} paid bookings`, gradient: 'from-violet-500 to-indigo-600' },
           { label: 'Partial Payments', value: partial.length, sub: 'Awaiting balance', gradient: 'from-amber-500 to-orange-600' },
           { label: 'Unpaid', value: unpaid.length, sub: 'Pending collection', gradient: 'from-pink-500 to-rose-600' },
         ].map((c, i) => (

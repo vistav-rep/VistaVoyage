@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import Reveal from "./Reveal";
+import getImageUrl from '../utils/imageUrl';
 
 import { tours as staticTours } from "../data/toursData";
 import api from "../api/axios";
@@ -129,14 +130,17 @@ const FeaturedTours = () => {
               <div className="group relative overflow-hidden rounded-[34px] bg-white border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_35px_90px_rgba(0,0,0,0.12)] transition-all duration-700">
                 {/* IMAGE */}
                 <div className="relative h-[420px] overflow-hidden">
-                  <img
-                    src={
-                      tour.image ||
-                      tour.images?.[0]
-                    }
-                    alt={tour.title}
-                    className="w-full h-full object-cover transition-transform duration-[1600ms] group-hover:scale-110"
-                  />
+                  {(() => {
+                    const src = getImageUrl(tour.image || tour.images?.[0]);
+                    return (
+                      <img
+                        src={src}
+                        alt={tour.title}
+                        onError={(e) => { e.currentTarget.src = getImageUrl(null); }}
+                        className="w-full h-full object-cover transition-transform duration-[1600ms] group-hover:scale-110"
+                      />
+                    );
+                  })()}
 
                   {/* OVERLAY */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
